@@ -3,7 +3,7 @@
 This is utility to generate dataset of move method refactorings. It can be used for learning and evaluation purposes.
 
 To generate refactorings you need to have Java project where refactorings will be searched. 
-Then to start the utility run the following in console:
+To start the utility run the following in console:
 ```
 ./generate-dataset <path to project> <path to output folder>
 ```
@@ -13,20 +13,20 @@ If you are getting an error:
 ```
 Error: Could not find or load main class org.gradle.wrapper.GradleWrapperMain
 ```
-then run the following before starting our bash script:
+run the following before starting our bash script:
 ```
 gradle wrapper
 ```
 
-After success you will get successful gradle output:
+In case of success you will get successful gradle output:
 ```
 BUILD SUCCESSFUL
 ```
-with other information data. 
+with other information about execution. 
 
-Then generated data can be found in \<path to output folder\> and there will three files:
-> method.csv - таблица методов
-> classes.csv - таблица классов, которые используются в method.csv
+Generated data can be found in \<path to output folder\> and there will three files:
+> method.csv - table of methods
+> classes.csv - table of classes, which are referenced in method.csv
 > log - log file of execution
 
 ## classes.csv
@@ -44,3 +44,5 @@ This table consists of six columns:
 4. offset from the file start to the start of method definition in the file
 5. class id, where method is defined (source class id)
 6. list of class ids (space is delimiter), where this method can be moved
+
+You can move listed methods into one of suggested classes and by doing that you will get labeled dataset. We assume that you choose a project which has mature design and most of methods are located correctly.
