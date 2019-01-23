@@ -35,14 +35,14 @@ Generated data can be found in \<path to output folder\> and there will be three
 This table consists of four columns: 
 1. class id
 2. qualified class name (with packages)
-3. path to file, where class is defined (relative to output folder path)
+3. path to file, where class is defined (relative to project path)
 4. offset from the file start to the start of class definition in the file
 
 ## methods.csv
 This table consists of six columns:
 1. method id
 2. qualified method name (with source class and packages)
-3. path to file, where method is defined (relative to output folder path)
+3. path to file, where method is defined (relative to project path)
 4. offset from the file start to the start of method definition in the file
 5. class id, where method is defined (source class id)
 6. list of class ids (space is delimiter), where this method can be moved
