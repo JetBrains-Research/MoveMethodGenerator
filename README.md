@@ -24,9 +24,11 @@ BUILD SUCCESSFUL
 ```
 with other information about execution. 
 
-Generated data can be found in \<path to output folder\> and there will three files:
+Generated data can be found in \<path to output folder\> and there will be three files:
 > method.csv - table of methods
+
 > classes.csv - table of classes, which are referenced in method.csv
+
 > log - log file of execution
 
 ## classes.csv
@@ -45,4 +47,4 @@ This table consists of six columns:
 5. class id, where method is defined (source class id)
 6. list of class ids (space is delimiter), where this method can be moved
 
-You can move listed methods into one of suggested classes and by doing that you will get labeled dataset. We assume that you choose a project which has mature design and most of methods are located correctly.
+You can move listed methods into one of suggested classes and by doing that you will get labeled dataset. We assume that you choose a project with mature design and most of methods are located correctly.
