@@ -7,7 +7,7 @@ Then to start the utility run the following in console:
 ```
 ./generate-dataset <path to project> <path to output folder>
 ```
-where \<path to project\> is a system path to project where you want to find possible refactorings, \<path to output folder\> - path where found refactorings will be stored.
+where \<path to project\> is a system path to project where you want to find possible refactorings, \<path to output folder\> - path where found refactorings will be stored. Note that these two paths must be **relative**.
 
 If you are getting an error: 
 ```
