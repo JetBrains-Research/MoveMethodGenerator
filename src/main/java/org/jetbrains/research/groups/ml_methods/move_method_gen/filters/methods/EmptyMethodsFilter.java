@@ -31,6 +31,8 @@ public class EmptyMethodsFilter implements Predicate<PsiMethod> {
         }
 
         PsiReturnStatement returnStatement = (PsiReturnStatement) theStatement;
-        return !isConstExpression(returnStatement.getReturnValue());
+
+        PsiExpression returnExpression = returnStatement.getReturnValue();
+        return returnExpression != null && !isConstExpression(returnExpression);
     }
 }
