@@ -1,0 +1,5 @@
+0,org.jhotdraw.draw.GridConstrainer.constrainPoint,jhotdraw7/src/main/java/org/jhotdraw/draw/GridConstrainer.java,4137,5,0
+1,org.jhotdraw.samples.odg.io.ODGInputFormat.nextEnhancedCoordinate,jhotdraw7/src/main/java/org/jhotdraw/samples/odg/io/ODGInputFormat.java,47201,6,1
+2,org.jhotdraw.draw.GridConstrainer.constrainPoint,jhotdraw-core/src/main/java/org/jhotdraw/draw/GridConstrainer.java,4156,7,2
+3,org.jhotdraw.samples.odg.figures.ODGBezierFigure.createHandles,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/odg/figures/ODGBezierFigure.java,1246,8,3
+4,org.jhotdraw.samples.svg.figures.SVGBezierFigure.createHandles,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/svg/figures/SVGBezierFigure.java,1355,9,4

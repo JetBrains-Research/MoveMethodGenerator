@@ -1,0 +1,10 @@
+0,org.jhotdraw.draw.TranslationDirection,jhotdraw7/src/main/java/org/jhotdraw/draw/TranslationDirection.java,346
+1,org.jhotdraw.io.StreamPosTokenizer,jhotdraw7/src/main/java/org/jhotdraw/io/StreamPosTokenizer.java,341
+2,org.jhotdraw.draw.TranslationDirection,jhotdraw-core/src/main/java/org/jhotdraw/draw/TranslationDirection.java,331
+3,org.jhotdraw.samples.odg.figures.ODGPathFigure,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/odg/figures/ODGPathFigure.java,989
+4,org.jhotdraw.samples.svg.figures.SVGPathFigure,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/svg/figures/SVGPathFigure.java,865
+5,org.jhotdraw.draw.GridConstrainer,jhotdraw7/src/main/java/org/jhotdraw/draw/GridConstrainer.java,287
+6,org.jhotdraw.samples.odg.io.ODGInputFormat,jhotdraw7/src/main/java/org/jhotdraw/samples/odg/io/ODGInputFormat.java,874
+7,org.jhotdraw.draw.GridConstrainer,jhotdraw-core/src/main/java/org/jhotdraw/draw/GridConstrainer.java,287
+8,org.jhotdraw.samples.odg.figures.ODGBezierFigure,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/odg/figures/ODGBezierFigure.java,650
+9,org.jhotdraw.samples.svg.figures.SVGBezierFigure,jhotdraw-samples/jhotdraw-samples-misc/src/main/java/org/jhotdraw/samples/svg/figures/SVGBezierFigure.java,760

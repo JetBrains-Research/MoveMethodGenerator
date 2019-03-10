@@ -1,0 +1,291 @@
+0,megamek.client.ui.swing.widget.GeneralInfoMapSet.addOptionsToList,megamek/src/megamek/client/ui/swing/widget/GeneralInfoMapSet.java,24809,335,0
+1,megamek.client.ui.swing.boardview.BoardView1.drawHexSpritesForHex,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,69582,341,329
+2,megamek.client.ui.swing.boardview.BoardView1.drawIsometricSpritesForHex,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,70318,341,329
+3,megamek.client.ui.swing.boardview.BoardView1.drawIsometricWreckSpritesForHex,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,71578,341,329
+4,megamek.client.ui.swing.boardview.BoardView1.drawSprite,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,73924,341,4
+5,megamek.client.ui.swing.boardview.BoardView1.moveCursor,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,148957,341,5 329
+6,megamek.client.ui.swing.boardview.BoardView1.processAffectedCoords,megamek/src/megamek/client/ui/swing/boardview/BoardView1.java,214843,341,7 329
+7,megamek.client.ui.swing.boardview.StepSprite.drawConditions,megamek/src/megamek/client/ui/swing/boardview/StepSprite.java,21820,344,544
+8,megamek.client.ui.swing.boardview.StepSprite.drawActiveVectors,megamek/src/megamek/client/ui/swing/boardview/StepSprite.java,23343,344,544
+9,megamek.client.ui.swing.boardview.StepSprite.drawMovementCost,megamek/src/megamek/client/ui/swing/boardview/StepSprite.java,27395,344,544
+10,megamek.client.ui.swing.unitDisplay.WeaponPanel.formatBayWeapon,megamek/src/megamek/client/ui/swing/unitDisplay/WeaponPanel.java,87713,346,531
+11,megamek.client.ui.swing.unitDisplay.WeaponPanel.changeAttackValues,megamek/src/megamek/client/ui/swing/unitDisplay/WeaponPanel.java,95189,346,325
+12,megamek.client.ui.swing.ClientGUI.deleteAllUnits,megamek/src/megamek/client/ui/swing/ClientGUI.java,62616,349,424
+13,megamek.client.ui.swing.ClientGUI.loadPreviewImage,megamek/src/megamek/client/ui/swing/ClientGUI.java,69052,349,523
+14,megamek.client.ui.swing.ClientGUI.loadPreviewImage,megamek/src/megamek/client/ui/swing/ClientGUI.java,69366,349,523
+15,megamek.client.ui.swing.UnitOverview.drawHeat,megamek/src/megamek/client/ui/swing/UnitOverview.java,10035,350,523
+16,megamek.client.ui.swing.MechViewPanel.setMech,megamek/src/megamek/client/ui/swing/MechViewPanel.java,4912,352,523
+17,megamek.client.ui.swing.MechViewPanel.setMech,megamek/src/megamek/client/ui/swing/MechViewPanel.java,5055,352,523
+18,megamek.client.ui.swing.TilesetManager.imageFor,megamek/src/megamek/client/ui/swing/TilesetManager.java,9380,354,523
+19,megamek.client.ui.swing.TilesetManager.reloadImage,megamek/src/megamek/client/ui/swing/TilesetManager.java,17446,354,523
+20,megamek.client.ui.swing.RandomArmyDialog.UnitTableModel.addUnit,megamek/src/megamek/client/ui/swing/RandomArmyDialog.java,44226,355,28
+21,megamek.client.ui.swing.RandomNameDialog.showDialog,megamek/src/megamek/client/ui/swing/RandomNameDialog.java,4184,356,523
+22,megamek.client.ui.swing.MiniReportDisplay.setupReportTabs,megamek/src/megamek/client/ui/swing/MiniReportDisplay.java,2998,357,424
+23,megamek.client.ui.swing.RandomSkillDialog.showDialog,megamek/src/megamek/client/ui/swing/RandomSkillDialog.java,5283,358,523
+24,megamek.client.ui.swing.AdvancedSearchDialog.matchUnitType,megamek/src/megamek/client/ui/swing/AdvancedSearchDialog.java,32782,359,226
+25,megamek.client.ui.swing.ForceGeneratorViewUi.ChosenEntityModel.addEntities,megamek/src/megamek/client/ui/swing/ForceGeneratorViewUi.java,20592,360,430
+26,megamek.client.ui.swing.AnalyzeFormationDialog.getNetworkMask,megamek/src/megamek/client/ui/swing/AnalyzeFormationDialog.java,11867,361,28
+27,megamek.client.ui.swing.BayMunitionsChoicePanel.AmmoRowPanel.createMunitionLabel,megamek/src/megamek/client/ui/swing/BayMunitionsChoicePanel.java,11033,362,325
+28,megamek.client.ui.swing.ForceGeneratorOptionsView.createMissionRoleCheck,megamek/src/megamek/client/ui/swing/ForceGeneratorOptionsView.java,18408,363,30
+29,megamek.client.bot.princess.Princess.setVerbosity,megamek/src/megamek/client/bot/princess/Princess.java,5833,377,106
+30,megamek.client.bot.princess.Princess.addStrategicBuildingTarget,megamek/src/megamek/client/bot/princess/Princess.java,10847,377,329
+31,megamek.client.bot.princess.Princess.calculateAdvancedAerospaceDeploymentCoords,megamek/src/megamek/client/bot/princess/Princess.java,17069,377,523
+32,megamek.client.bot.princess.Princess.calculateTurretDeploymentValue,megamek/src/megamek/client/bot/princess/Princess.java,20160,377,329
+33,megamek.client.bot.princess.Princess.calcAmmoConservation,megamek/src/megamek/client/bot/princess/Princess.java,25959,377,523
+34,megamek.client.bot.princess.Princess.isFallingBack,megamek/src/megamek/client/bot/princess/Princess.java,44057,377,523
+35,megamek.client.bot.princess.Princess.getHex,megamek/src/megamek/client/bot/princess/Princess.java,49043,377,329
+36,megamek.client.bot.princess.Princess.isEnemyGunEmplacement,megamek/src/megamek/client/bot/princess/Princess.java,69078,377,523 329
+37,megamek.client.bot.princess.Princess.isEnemyInfantry,megamek/src/megamek/client/bot/princess/Princess.java,69484,377,523 329
+38,megamek.client.bot.princess.Princess.log,megamek/src/megamek/client/bot/princess/Princess.java,70423,377,106
+39,megamek.client.bot.princess.Princess.getHomeEdge,megamek/src/megamek/client/bot/princess/Princess.java,71752,377,523
+40,megamek.client.bot.princess.Princess.unjamRAC,megamek/src/megamek/client/bot/princess/Princess.java,76555,377,542
+41,megamek.client.bot.princess.Princess.evadeIfNotFiring,megamek/src/megamek/client/bot/princess/Princess.java,76969,377,542
+42,megamek.client.bot.princess.Princess.sendChat,megamek/src/megamek/client/bot/princess/Princess.java,81279,377,106
+43,megamek.client.bot.princess.MoralUtil.calcDamageMod,megamek/src/megamek/client/bot/princess/MoralUtil.java,7896,379,523
+44,megamek.client.bot.princess.MoralUtil.calcExperienceMod,megamek/src/megamek/client/bot/princess/MoralUtil.java,8414,379,523
+45,megamek.client.bot.princess.FiringPlan.containsWeapon,megamek/src/megamek/client/bot/princess/FiringPlan.java,3889,380,531
+46,megamek.client.bot.princess.PathRanker.validRange,megamek/src/megamek/client/bot/princess/PathRanker.java,17047,381,329
+47,megamek.client.bot.princess.FireControl.isTargetUnderFlightPath,megamek/src/megamek/client/bot/princess/FireControl.java,53555,394,542 67
+48,megamek.client.bot.princess.FireControl.isSubCommander,megamek/src/megamek/client/bot/princess/FireControl.java,65141,394,523
+49,megamek.client.bot.princess.FireControl.getTargetableEnemyEntities,megamek/src/megamek/client/bot/princess/FireControl.java,108773,394,523 55
+50,megamek.client.bot.princess.FireControl.getMaxDamageAtRange,megamek/src/megamek/client/bot/princess/FireControl.java,113863,394,523
+51,megamek.client.bot.princess.FireControl.getClusterAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,117243,394,552
+52,megamek.client.bot.princess.FireControl.getAtmAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,126195,394,67
+53,megamek.client.bot.princess.FireControl.getAntiVeeAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,129191,394,552
+54,megamek.client.bot.princess.FireControl.getAntiInfantryAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,130807,394,552
+55,megamek.client.bot.princess.FireControl.getHeatAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,132570,394,552
+56,megamek.client.bot.princess.FireControl.getIncendiaryAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,134037,394,552
+57,megamek.client.bot.princess.FireControl.getHardTargetAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,135718,394,552
+58,megamek.client.bot.princess.FireControl.getAntiAirAmmo,megamek/src/megamek/client/bot/princess/FireControl.java,139428,394,552
+59,megamek.client.bot.princess.FireControl.getUnjamWeaponPlan,megamek/src/megamek/client/bot/princess/FireControl.java,142401,394,523
+60,megamek.client.bot.princess.PhysicalInfo.buildAction,megamek/src/megamek/client/bot/princess/PhysicalInfo.java,3582,396,66
+61,megamek.client.bot.princess.PhysicalInfo.setDamageDirection,megamek/src/megamek/client/bot/princess/PhysicalInfo.java,14351,396,67 329
+62,megamek.client.bot.princess.Precognition.isEntityOnMap,megamek/src/megamek/client/bot/princess/Precognition.java,14595,397,523
+63,megamek.client.bot.princess.BasicPathRanker.calcWaterHazard,megamek/src/megamek/client/bot/princess/BasicPathRanker.java,47686,399,544 523
+64,megamek.client.bot.princess.BasicPathRanker.calcFireHazard,megamek/src/megamek/client/bot/princess/BasicPathRanker.java,51752,399,523
+65,megamek.client.bot.princess.NewtonianAerospacePathRanker.calculateSensorShadowMod,megamek/src/megamek/client/bot/princess/NewtonianAerospacePathRanker.java,7551,400,542
+66,megamek.client.bot.CEntity.findMoves,megamek/src/megamek/client/bot/CEntity.java,45420,401,424 329
+67,megamek.client.bot.TestBot.myEnemies,megamek/src/megamek/client/bot/TestBot.java,16312,404,523
+68,megamek.client.bot.TestBot.filterMoves,megamek/src/megamek/client/bot/TestBot.java,54157,404,408 78
+69,megamek.client.bot.TestBot.attackUtility,megamek/src/megamek/client/bot/TestBot.java,70583,404,84 401
+70,megamek.client.bot.BotClient.getMassOfAllInBuilding,megamek/src/megamek/client/bot/BotClient.java,21067,406,329
+71,megamek.client.bot.BotClient.potentialBuildingDamage,megamek/src/megamek/client/bot/BotClient.java,37823,406,523
+72,megamek.client.bot.MoveOption.Table.get,megamek/src/megamek/client/bot/MoveOption.java,2775,408,84
+73,megamek.client.bot.MoveOption.Table.remove,megamek/src/megamek/client/bot/MoveOption.java,2876,408,84
+74,megamek.client.bot.ChatProcessor.shouldBotAcknowledgeDefeat,megamek/src/megamek/client/bot/ChatProcessor.java,1288,411,406
+75,megamek.client.bot.ChatProcessor.shouldBotAcknowledgeVictory,megamek/src/megamek/client/bot/ChatProcessor.java,2266,411,406
+76,megamek.client.bot.ChatProcessor.additionalTestBotCommands,megamek/src/megamek/client/bot/ChatProcessor.java,4606,411,404
+77,megamek.client.commands.AssignNovaNetworkCommand.setNewNetworkID,megamek/src/megamek/client/commands/AssignNovaNetworkCommand.java,4297,412,523
+78,megamek.client.Client.sendAddEntity,megamek/src/megamek/client/Client.java,26804,424,523
+79,megamek.client.Client.receivePlayerInfo,megamek/src/megamek/client/Client.java,30280,424,305
+80,megamek.client.Client.receiveBoard,megamek/src/megamek/client/Client.java,31205,424,305
+81,megamek.client.Client.receiveEntities,megamek/src/megamek/client/Client.java,31411,424,305
+82,megamek.client.Client.receiveEntityUpdate,megamek/src/megamek/client/Client.java,31905,424,305
+83,megamek.client.Client.receiveEntityAdd,megamek/src/megamek/client/Client.java,32341,424,305
+84,megamek.client.Client.receiveEntityRemove,megamek/src/megamek/client/Client.java,32836,424,305
+85,megamek.client.Client.receiveEntityVisibilityIndicator,megamek/src/megamek/client/Client.java,33160,424,305
+86,megamek.client.Client.receiveUpdateMinefields,megamek/src/megamek/client/Client.java,34676,424,305
+87,megamek.client.Client.receiveBuildingUpdate,megamek/src/megamek/client/Client.java,35189,424,305
+88,megamek.client.Client.receiveAttack,megamek/src/megamek/client/Client.java,35552,424,305
+89,megamek.client.Client.receiveEntityNovaNetworkModeChange,megamek/src/megamek/client/Client.java,51491,424,305
+90,megamek.client.ratgenerator.ForceNode.getCoRank,megamek/src/megamek/client/ratgenerator/ForceNode.java,12614,425,430
+91,megamek.client.ratgenerator.ChassisRecord.addModel,megamek/src/megamek/client/ratgenerator/ChassisRecord.java,1109,426,102
+92,megamek.client.ratgenerator.FormationType.generateFormation,megamek/src/megamek/client/ratgenerator/FormationType.java,8963,428,103
+93,megamek.client.ratgenerator.FormationType.findMatchedGroups,megamek/src/megamek/client/ratgenerator/FormationType.java,41306,428,104
+94,.rank,megamek/src/megamek/client/ratgenerator/ForceDescriptor.java,47770,429,430
+95,megamek.client.ratgenerator.ForceDescriptor.show,megamek/src/megamek/client/ratgenerator/ForceDescriptor.java,67373,430,106
+96,megamek.client.ratgenerator.AbstractUnitRecord.calcAvailability,megamek/src/megamek/client/ratgenerator/AbstractUnitRecord.java,1177,431,107
+97,megamek.client.ratgenerator.TransportCalculator.countBays,megamek/src/megamek/client/ratgenerator/TransportCalculator.java,8318,432,523
+98,megamek.client.RandomUnitGenerator.getNodeByPath,megamek/src/megamek/client/RandomUnitGenerator.java,9218,433,109
+99,megamek.common.net.marshall.PacketMarshaller.marshall,megamek/src/megamek/common/net/marshall/PacketMarshaller.java,1030,434,305
+100,megamek.common.actions.RamAttackAction.toHit,megamek/src/megamek/common/actions/RamAttackAction.java,2515,436,329
+101,megamek.common.actions.RamAttackAction.toHit,megamek/src/megamek/common/actions/RamAttackAction.java,8318,436,542
+102,megamek.common.actions.ChargeAttackAction.toHit,megamek/src/megamek/common/actions/ChargeAttackAction.java,2796,438,329
+103,megamek.common.actions.ChargeAttackAction.toHit,megamek/src/megamek/common/actions/ChargeAttackAction.java,15665,438,542
+104,megamek.common.actions.AirmechRamAttackAction.toHit,megamek/src/megamek/common/actions/AirmechRamAttackAction.java,2530,440,329
+105,megamek.common.actions.AirmechRamAttackAction.toHit,megamek/src/megamek/common/actions/AirmechRamAttackAction.java,12554,440,542
+106,megamek.common.actions.SearchlightAttackAction.willIlluminate,megamek/src/megamek/common/actions/SearchlightAttackAction.java,5555,441,523
+107,megamek.common.actions.TeleMissileAttackAction.getLargeCraftHeat,megamek/src/megamek/common/actions/TeleMissileAttackAction.java,3600,443,523
+108,megamek.common.actions.TeleMissileAttackAction.canEngageCapitalMissile,megamek/src/megamek/common/actions/TeleMissileAttackAction.java,5377,443,531
+109,megamek.common.loaders.MepFile.decodeArmorAndInternals,megamek/src/megamek/common/loaders/MepFile.java,12183,444,466
+110,megamek.common.weapons.bayweapons.AmmoBayWeapon.checkAmmo,megamek/src/megamek/common/weapons/bayweapons/AmmoBayWeapon.java,1697,445,122
+111,megamek.common.weapons.AmmoWeapon.checkAmmo,megamek/src/megamek/common/weapons/AmmoWeapon.java,1642,446,122
+112,megamek.common.weapons.NarcHandler.narcCanAttachTo,megamek/src/megamek/common/weapons/NarcHandler.java,10010,447,523
+113,megamek.common.weapons.CapitalMissileHandler.getCritMod,megamek/src/megamek/common/weapons/CapitalMissileHandler.java,15357,448,325
+114,megamek.common.weapons.CapitalMissileBayHandler.getCritMod,megamek/src/megamek/common/weapons/CapitalMissileBayHandler.java,16535,449,325
+115,megamek.common.weapons.CapitalMissileBearingsOnlyHandler.getCritMod,megamek/src/megamek/common/weapons/CapitalMissileBearingsOnlyHandler.java,36754,450,325
+116,megamek.common.verifier.BayData.isLegalFor,megamek/src/megamek/common/verifier/BayData.java,9470,451,523
+117,megamek.common.verifier.TestAero.checkCriticalSlotsForEquipment,megamek/src/megamek/common/verifier/TestAero.java,27827,453,523
+118,megamek.common.verifier.TestAero.isAeroWeapon,megamek/src/megamek/common/verifier/TestAero.java,38823,453,523 226
+119,megamek.common.verifier.TestMech.countCriticalSlotsFromEquipInLocation,megamek/src/megamek/common/verifier/TestMech.java,13380,456,523 531
+120,megamek.common.verifier.TestMech.checkMiscSpreadAllocation,megamek/src/megamek/common/verifier/TestMech.java,14055,456,523 531
+121,megamek.common.verifier.TestMech.criticalSlotsAllocated,megamek/src/megamek/common/verifier/TestMech.java,18712,456,523 531
+122,megamek.common.verifier.TestEntity.calcMiscCrits,megamek/src/megamek/common/verifier/TestEntity.java,24989,457,536
+123,megamek.common.verifier.TestProtomech.getMinimumWalkMP,megamek/src/megamek/common/verifier/TestProtomech.java,20904,458,138
+124,megamek.common.verifier.EntityVerifier.checkEntity,megamek/src/megamek/common/verifier/EntityVerifier.java,4475,459,523
+125,megamek.common.verifier.TestBattleArmor.getUnallocatedEquipment,megamek/src/megamek/common/verifier/TestBattleArmor.java,37083,460,523
+126,megamek.common.verifier.TestAdvancedAerospace.CapitalArmor.pointsPerTon,megamek/src/megamek/common/verifier/TestAdvancedAerospace.java,3362,461,141
+127,megamek.common.Aero.chooseSideRam,megamek/src/megamek/common/Aero.java,101212,462,329
+128,megamek.common.Mech.getPartialWingJumpBonus,megamek/src/megamek/common/Mech.java,38128,466,531
+129,megamek.common.Mech.addEquipment,megamek/src/megamek/common/Mech.java,101903,466,226
+130,megamek.common.Mech.decodeCritical,megamek/src/megamek/common/Mech.java,247222,466,181
+131,megamek.common.Mech.getCrewForCockpitSlot,megamek/src/megamek/common/Mech.java,261231,466,181
+132,megamek.common.templates.TROView.formatSystemFluff,megamek/src/megamek/common/templates/TROView.java,8359,471,147 148
+133,megamek.common.templates.TROView.formatTechBase,megamek/src/megamek/common/templates/TROView.java,11293,471,523
+134,megamek.common.templates.TROView.formatArmorType,megamek/src/megamek/common/templates/TROView.java,11805,471,523
+135,megamek.common.templates.TROView.addArmorStructureEntries,megamek/src/megamek/common/templates/TROView.java,13301,471,523
+136,megamek.common.templates.TROView.getSpreadableLocations,megamek/src/megamek/common/templates/TROView.java,20691,471,523 226
+137,megamek.common.templates.InfantryTROView.addArmorNotes,megamek/src/megamek/common/templates/InfantryTROView.java,8603,472,226
+138,megamek.common.templates.BattleArmorTROView.formatManipulatorRow,megamek/src/megamek/common/templates/BattleArmorTROView.java,5852,473,531
+139,megamek.common.pathfinder.MovePathFinder.NextStepsAdjacencyMap.addUpAndDown,megamek/src/megamek/common/pathfinder/MovePathFinder.java,13563,474,544 523 542
+140,megamek.common.pathfinder.BoardEdgePathFinder.determineOppositeEdge,megamek/src/megamek/common/pathfinder/BoardEdgePathFinder.java,2512,479,523
+141,megamek.common.pathfinder.BoardEdgePathFinder.getAppropriateFacing,megamek/src/megamek/common/pathfinder/BoardEdgePathFinder.java,4638,479,523
+142,megamek.common.pathfinder.BoardEdgePathFinder.matchFacingToPath,megamek/src/megamek/common/pathfinder/BoardEdgePathFinder.java,9184,479,544 542
+143,megamek.common.pathfinder.BoardEdgePathFinder.calculateUnitElevationInHex,megamek/src/megamek/common/pathfinder/BoardEdgePathFinder.java,26115,479,523
+144,megamek.common.pathfinder.BoardEdgePathFinder.isOnBoardEdge,megamek/src/megamek/common/pathfinder/BoardEdgePathFinder.java,27364,479,542
+145,megamek.common.pathfinder.NewtonianAerospacePathFinder.tooMuchTurning,megamek/src/megamek/common/pathfinder/NewtonianAerospacePathFinder.java,8832,480,542
+146,megamek.common.Engine.getWalkHeat,megamek/src/megamek/common/Engine.java,23555,482,523
+147,megamek.common.Engine.getRunHeat,megamek/src/megamek/common/Engine.java,23833,482,523
+148,megamek.common.Entity.canGoUp,megamek/src/megamek/common/Entity.java,70677,523,329
+149,megamek.common.Entity.getLocationAbbr,megamek/src/megamek/common/Entity.java,95904,523,169
+150,megamek.common.Entity.addEquipment,megamek/src/megamek/common/Entity.java,110602,523,226
+151,megamek.common.Entity.addEquipment,megamek/src/megamek/common/Entity.java,112581,523,226
+152,megamek.common.Entity.addEquipment,megamek/src/megamek/common/Entity.java,113683,523,531
+153,megamek.common.Entity.getEquipmentNum,megamek/src/megamek/common/Entity.java,116711,523,531
+154,megamek.common.Entity.getEquipmentType,megamek/src/megamek/common/Entity.java,117409,523,181
+155,megamek.common.Entity.getTotalAmmoOfType,megamek/src/megamek/common/Entity.java,117864,523,226
+156,megamek.common.Entity.getTotalMunitionsOfType,megamek/src/megamek/common/Entity.java,118193,523,226
+157,megamek.common.Entity.isWeaponValidForPhase,megamek/src/megamek/common/Entity.java,122562,523,531
+158,megamek.common.Entity.loadWeapon,megamek/src/megamek/common/Entity.java,125092,523,531
+159,megamek.common.Entity.loadWeaponWithSameAmmo,megamek/src/megamek/common/Entity.java,125380,523,531
+160,megamek.common.Entity.addCritical,megamek/src/megamek/common/Entity.java,145076,523,181
+161,megamek.common.Entity.removeCriticals,megamek/src/megamek/common/Entity.java,145543,523,181
+162,megamek.common.Entity.getNumberOfCriticals,megamek/src/megamek/common/Entity.java,154992,523,226
+163,megamek.common.Entity.getNumberOfCriticals,megamek/src/megamek/common/Entity.java,155552,523,226
+164,megamek.common.Entity.getNumberOf,megamek/src/megamek/common/Entity.java,155909,523,226
+165,megamek.common.Entity.addConditionBonuses,megamek/src/megamek/common/Entity.java,232433,523,293
+166,megamek.common.Entity.checkMovedTooFast,megamek/src/megamek/common/Entity.java,247546,523,544
+167,megamek.common.Entity.checkWaterMove,megamek/src/megamek/common/Entity.java,256100,523,544 329
+168,megamek.common.Entity.checkDislodgeSwarmers,megamek/src/megamek/common/Entity.java,258538,523,544
+169,megamek.common.Entity.checkMovementInBuilding,megamek/src/megamek/common/Entity.java,259350,523,544 329
+170,megamek.common.Entity.checkTurnModeFailure,megamek/src/megamek/common/Entity.java,266273,523,329
+171,megamek.common.Entity.adjustDifficultTerrainPSRModifier,megamek/src/megamek/common/Entity.java,270306,523,293
+172,megamek.common.Entity.canAssist,megamek/src/megamek/common/Entity.java,327898,523,247
+173,megamek.common.Entity.sideTable,megamek/src/megamek/common/Entity.java,367622,523,329
+174,megamek.common.Entity.addPilotingModifierForTerrain,megamek/src/megamek/common/Entity.java,373559,523,293 329
+175,megamek.common.Entity.addPilotingModifierForTerrain,megamek/src/megamek/common/Entity.java,374387,523,544 293
+176,megamek.common.Entity.addPilotingModifierForTerrain,megamek/src/megamek/common/Entity.java,374811,523,293
+177,megamek.common.Entity.checkSideSlip,megamek/src/megamek/common/Entity.java,384438,523,544 329
+178,megamek.common.Entity.hasLinkedMGA,megamek/src/megamek/common/Entity.java,387716,523,531
+179,megamek.common.Entity.getFirstBay,megamek/src/megamek/common/Entity.java,390411,523,552
+180,megamek.common.Entity.chooseSide,megamek/src/megamek/common/Entity.java,392276,523,329
+181,megamek.common.Entity.passedThrough,megamek/src/megamek/common/Entity.java,395792,523,329
+182,megamek.common.Entity.passedWithin,megamek/src/megamek/common/Entity.java,395995,523,329
+183,megamek.common.Entity.passedThroughPrevious,megamek/src/megamek/common/Entity.java,396310,523,329
+184,megamek.common.Entity.getBayByAmmo,megamek/src/megamek/common/Entity.java,421192,523,531
+185,megamek.common.Entity.doMASCCheckFor,megamek/src/megamek/common/Entity.java,466782,523,531
+186,megamek.common.Entity.sideTableRam,megamek/src/megamek/common/Entity.java,486039,523,329
+187,megamek.common.Entity.getCustomWeaponOrder,megamek/src/megamek/common/Entity.java,503730,523,531
+188,megamek.common.Entity.setCustomWeaponOrder,megamek/src/megamek/common/Entity.java,504065,523,531
+189,megamek.common.Report.addDesc,megamek/src/megamek/common/Report.java,10332,524,523
+190,megamek.common.Sensor.adjustRange,megamek/src/megamek/common/Sensor.java,6620,529,215
+191,megamek.common.Sensor.getModsForStealth,megamek/src/megamek/common/Sensor.java,8877,529,523
+192,megamek.common.Sensor.getModForECM,megamek/src/megamek/common/Sensor.java,14455,529,523
+193,megamek.common.Sensor.getModForMetalContent,megamek/src/megamek/common/Sensor.java,16130,529,523
+194,megamek.common.Sensor.entityAdjustments,megamek/src/megamek/common/Sensor.java,16535,529,523
+195,megamek.common.Mounted.getDamageAbsorption,megamek/src/megamek/common/Mounted.java,40600,531,523
+196,megamek.common.Mounted.getCurrentDamageCapacity,megamek/src/megamek/common/Mounted.java,42471,531,523
+197,megamek.common.Building.addDemolitionCharge,megamek/src/megamek/common/Building.java,28461,533,329
+198,megamek.common.Building.getAbsorbtion,megamek/src/megamek/common/Building.java,30453,533,329
+199,megamek.common.Infantry.checkBogDown,megamek/src/megamek/common/Infantry.java,48632,535,544 329
+200,megamek.common.Infantry.setArmorKit,megamek/src/megamek/common/Infantry.java,62674,535,226
+201,megamek.common.MiscType.getBV,megamek/src/megamek/common/MiscType.java,67410,536,523 531
+202,megamek.common.MovePath.findSimplePathTo,megamek/src/megamek/common/MovePath.java,41094,542,329
+203,megamek.common.MovePath.lazyPathfinder,megamek/src/megamek/common/MovePath.java,51962,542,329
+204,megamek.common.MovePath.getSecondFinalPosition,megamek/src/megamek/common/MovePath.java,64754,542,329
+205,megamek.common.MovePath.isEndStep,megamek/src/megamek/common/MovePath.java,66231,542,544
+206,megamek.common.MovePath.setVTOLBombStep,megamek/src/megamek/common/MovePath.java,66621,542,329
+207,megamek.common.MovePath.setStrafingStep,megamek/src/megamek/common/MovePath.java,67689,542,329
+208,megamek.common.MoveStep.useAeroAtmosphere,megamek/src/megamek/common/MoveStep.java,144688,544,523
+209,megamek.common.MoveStep.useSpheroidAtmosphere,megamek/src/megamek/common/MoveStep.java,145236,544,523
+210,megamek.common.QuadMech.addQuadPilotingBonus,megamek/src/megamek/common/QuadMech.java,9928,545,293
+211,megamek.common.BipedMech.addStandingPenalties,megamek/src/megamek/common/BipedMech.java,26883,546,293
+212,megamek.common.MULParser.addExtraAmmoToBay,megamek/src/megamek/common/MULParser.java,90197,550,523
+213,megamek.common.MULParser.destroyLocation,megamek/src/megamek/common/MULParser.java,94262,550,523
+214,megamek.common.MULParser.breachLocation,megamek/src/megamek/common/MULParser.java,95353,550,523
+215,megamek.common.MULParser.blowOffLocation,megamek/src/megamek/common/MULParser.java,95950,550,523
+216,megamek.common.TripodMech.addStandingPenalties,megamek/src/megamek/common/TripodMech.java,30641,551,293
+217,megamek.common.WeaponType.getRanges,megamek/src/megamek/common/WeaponType.java,38979,552,531
+218,megamek.common.LandAirMech.getConversionModeFor,megamek/src/megamek/common/LandAirMech.java,35879,553,245
+219,megamek.common.ArtilleryTracker.getModifierByCoords,megamek/src/megamek/common/ArtilleryTracker.java,3766,554,329
+220,megamek.common.SpecialHexDisplay.drawNow,megamek/src/megamek/common/SpecialHexDisplay.java,6516,555,247
+221,megamek.common.BattleForceElement.calcHeatCapacity,megamek/src/megamek/common/BattleForceElement.java,22344,557,523
+222,megamek.common.BattleForceElement.calculatePointValue,megamek/src/megamek/common/BattleForceElement.java,22901,557,523
+223,megamek.common.PlanetaryConditions.getWeatherHitPenalty,megamek/src/megamek/common/PlanetaryConditions.java,10062,562,523
+224,megamek.common.PlanetaryConditions.getWindPilotPenalty,megamek/src/megamek/common/PlanetaryConditions.java,11637,562,523
+225,megamek.common.PlanetaryConditions.getMovementMods,megamek/src/megamek/common/PlanetaryConditions.java,17734,562,523
+226,megamek.common.PlanetaryConditions.whyDoomed,megamek/src/megamek/common/PlanetaryConditions.java,19990,562,523
+227,megamek.common.PlanetaryConditions.getVisualRange,megamek/src/megamek/common/PlanetaryConditions.java,21202,562,523
+228,megamek.server.Server.receivePlayerInfo,megamek/src/megamek/server/Server.java,31779,622,305
+229,megamek.server.Server.checkTurnOrderStranded,megamek/src/megamek/server/Server.java,143159,622,256
+230,megamek.server.Server.disconnectUnit,megamek/src/megamek/server/Server.java,184038,622,523 329
+231,megamek.server.Server.dropUnit,megamek/src/megamek/server/Server.java,201461,622,523 329
+232,megamek.server.Server.checkCrash,megamek/src/megamek/server/Server.java,267791,622,523 329
+233,megamek.server.Server.processTrailerMovement,megamek/src/megamek/server/Server.java,435087,622,523
+234,megamek.server.Server.initializeTrailerCoordinates,megamek/src/megamek/server/Server.java,439125,622,523
+235,megamek.server.Server.deliverArtilleryFlare,megamek/src/megamek/server/Server.java,468777,622,329
+236,megamek.server.Server.deliverMortarFlare,megamek/src/megamek/server/Server.java,469038,622,329
+237,megamek.server.Server.deliverMissileSmoke,megamek/src/megamek/server/Server.java,469212,622,329
+238,megamek.server.Server.deliverSmokeGrenade,megamek/src/megamek/server/Server.java,469791,622,329
+239,megamek.server.Server.deliverSmokeMortar,megamek/src/megamek/server/Server.java,470283,622,329
+240,megamek.server.Server.deliverChaffGrenade,megamek/src/megamek/server/Server.java,470807,622,329
+241,megamek.server.Server.deliverArtillerySmoke,megamek/src/megamek/server/Server.java,471311,622,329
+242,megamek.server.Server.deliverLIsmoke,megamek/src/megamek/server/Server.java,472657,622,329
+243,megamek.server.Server.deliverScreen,megamek/src/megamek/server/Server.java,476984,622,329
+244,megamek.server.Server.clearMinefield,megamek/src/megamek/server/Server.java,515251,622,523 279
+245,megamek.server.Server.clearDetonatedMines,megamek/src/megamek/server/Server.java,518546,622,329
+246,megamek.server.Server.removeMinefield,megamek/src/megamek/server/Server.java,527308,622,279
+247,megamek.server.Server.revealMinefield,megamek/src/megamek/server/Server.java,528150,622,278 279
+248,megamek.server.Server.receiveGroundToAirHexSelectPacket,megamek/src/megamek/server/Server.java,604676,622,305
+249,megamek.server.Server.getKickPushPSR,megamek/src/megamek/server/Server.java,832927,622,523
+250,megamek.server.Server.clearFlawedCoolingFlags,megamek/src/megamek/server/Server.java,900045,622,523
+251,megamek.server.Server.doFlawedCoolingCheck,megamek/src/megamek/server/Server.java,901893,622,523
+252,megamek.server.Server.createCrewTakeoverReport,megamek/src/megamek/server/Server.java,953150,622,523
+253,megamek.server.Server.doFusionEngineExplosion,megamek/src/megamek/server/Server.java,1068036,622,329
+254,megamek.server.Server.doExplosion,megamek/src/megamek/server/Server.java,1068476,622,329
+255,megamek.server.Server.canShelter,megamek/src/megamek/server/Server.java,1079427,622,329
+256,megamek.server.Server.doNuclearExplosion,megamek/src/megamek/server/Server.java,1082471,622,329
+257,megamek.server.Server.criticalTank,megamek/src/megamek/server/Server.java,1201190,622,320
+258,megamek.server.Server.criticalAero,megamek/src/megamek/server/Server.java,1208931,622,462
+259,megamek.server.Server.explodeEquipment,megamek/src/megamek/server/Server.java,1253714,622,523
+260,megamek.server.Server.resolvePilotDamageFromFall,megamek/src/megamek/server/Server.java,1288141,622,523 293
+261,megamek.server.Server.checkIgnition,megamek/src/megamek/server/Server.java,1294238,622,294 329
+262,megamek.server.Server.ignite,megamek/src/megamek/server/Server.java,1297423,622,329
+263,megamek.server.Server.receiveEntityUpdate,megamek/src/megamek/server/Server.java,1344232,622,305
+264,megamek.server.Server.receiveCustomInit,megamek/src/megamek/server/Server.java,1347798,622,305
+265,megamek.server.Server.receiveEntitySensorChange,megamek/src/megamek/server/Server.java,1350497,622,305
+266,megamek.server.Server.receiveEntitySinksChange,megamek/src/megamek/server/Server.java,1350876,622,305
+267,megamek.server.Server.receiveEntityNovaNetworkModeChange,megamek/src/megamek/server/Server.java,1351881,622,305
+268,megamek.server.Server.receiveEntityMountedFacingChange,megamek/src/megamek/server/Server.java,1352772,622,305
+269,megamek.server.Server.receiveEntityCalledShotChange,megamek/src/megamek/server/Server.java,1353362,622,305
+270,megamek.server.Server.receiveEntitySystemModeChange,megamek/src/megamek/server/Server.java,1353917,622,305
+271,megamek.server.Server.receivePlayerDone,megamek/src/megamek/server/Server.java,1361668,622,305
+272,megamek.server.Server.createHexChangePacket,megamek/src/megamek/server/Server.java,1378410,622,329
+273,megamek.server.Server.checkExplodeIndustrialZone,megamek/src/megamek/server/Server.java,1408228,622,329
+274,megamek.server.Server.checkBuildingCollapseWhileMoving,megamek/src/megamek/server/Server.java,1416793,622,523 533 329
+275,megamek.server.Server.damageInfantryIn,megamek/src/megamek/server/Server.java,1418255,622,533 329
+276,megamek.server.Server.damageBuilding,megamek/src/megamek/server/Server.java,1449374,622,533 329
+277,megamek.server.Server.criticalGunEmplacement,megamek/src/megamek/server/Server.java,1455806,622,533 329
+278,megamek.server.Server.creditKill,megamek/src/megamek/server/Server.java,1469572,622,523
+279,megamek.server.Server.preTreatPhysicalAttack,megamek/src/megamek/server/Server.java,1470562,622,318
+280,megamek.server.Server.checkQuickSand,megamek/src/megamek/server/Server.java,1529486,622,329
+281,megamek.server.Server.resolveVehicleFire,megamek/src/megamek/server/Server.java,1531973,622,320
+282,megamek.server.Server.artilleryDamageArea,megamek/src/megamek/server/Server.java,1565056,622,523 325 329
+283,megamek.server.Server.artilleryDamageArea,megamek/src/megamek/server/Server.java,1567786,622,523 325 329
+284,megamek.server.Server.deliverBombDamage,megamek/src/megamek/server/Server.java,1569587,622,523 329
+285,megamek.server.Server.createSmoke,megamek/src/megamek/server/Server.java,1579540,622,329
+286,megamek.server.Server.updateSmoke,megamek/src/megamek/server/Server.java,1580500,622,332
+287,megamek.server.Server.removeSmokeTerrain,megamek/src/megamek/server/Server.java,1580802,622,332
+288,megamek.server.FireProcessor.driftSmokeDissipate,megamek/src/megamek/server/FireProcessor.java,20730,623,332
+289,megamek.server.ScenarioLoader.getValidAmmoType,megamek/src/megamek/server/ScenarioLoader.java,5989,625,531
+290,megamek.server.ScenarioLoader.parseAutoEject,megamek/src/megamek/server/ScenarioLoader.java,30813,625,523
