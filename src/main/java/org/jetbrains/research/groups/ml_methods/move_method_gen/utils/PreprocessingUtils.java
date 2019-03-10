@@ -1,6 +1,8 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.utils;
 
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.module.StdModuleTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -18,6 +20,24 @@ import java.util.stream.Collectors;
 
 public class PreprocessingUtils {
     private PreprocessingUtils() {}
+
+    public static void addMainModuleIfLost(
+        final @NotNull Project project
+    ) {
+        // https://intellij-support.jetbrains.com/hc/en-us/community/posts/206756995-create-module-in-a-project-programmatically
+
+        ModuleManager manager = ModuleManager.getInstance(project);
+        Module[] modules = manager.getModules();
+        if (modules.length == 0) {
+            Module module = manager.newModule(project.getBasePath(), StdModuleTypes.JAVA.getId());
+
+            ModifiableRootModel model =
+                    ModuleRootManager.getInstance(module).getModifiableModel();
+
+            model.addContentEntry(project.getBaseDir()).addSourceFolder(project.getBaseDir(), false);
+            model.commit();
+        }
+    }
 
     public static void addAllPossibleSourceRoots(
         final @NotNull Project project

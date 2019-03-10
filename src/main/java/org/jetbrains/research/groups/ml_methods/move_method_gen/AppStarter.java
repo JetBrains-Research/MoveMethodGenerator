@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.PreprocessingUtils.addAllPossibleSourceRoots;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.PreprocessingUtils.addMainModuleIfLost;
 
 public class AppStarter implements ApplicationStarter {
     private String projectFolderPath = "";
@@ -82,6 +83,14 @@ public class AppStarter implements ApplicationStarter {
             PatchProjectUtil.patchProject(project);
 
             log.info("Project " + projectFolderPath + " is opened");
+
+            application.runWriteAction(() -> {
+                try {
+                    addMainModuleIfLost(project);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             application.runWriteAction(() -> {
                 try {
