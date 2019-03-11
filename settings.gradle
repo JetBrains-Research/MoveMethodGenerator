@@ -1,2 +1,3 @@
 rootProject.name = 'MoveMethodGenerator'
 
+include 'methods-searcher'
