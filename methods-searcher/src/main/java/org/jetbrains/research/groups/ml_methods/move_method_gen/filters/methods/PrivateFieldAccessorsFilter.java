@@ -36,11 +36,11 @@ public class PrivateFieldAccessorsFilter implements Predicate<PsiMethod> {
                 PsiField field = optional.get();
 
                 if (MethodUtils.isInLeftSideOfAssignment(expression)) {
-                    if (!projectInfo.getFieldToSetter().containsKey(field)) {
+                    if (!projectInfo.getAccessorsMap().getFieldToSetter().containsKey(field)) {
                         resultRef.set(false);
                     }
                 } else {
-                    if (!projectInfo.getFieldToGetter().containsKey(field)) {
+                    if (!projectInfo.getAccessorsMap().getFieldToGetter().containsKey(field)) {
                         resultRef.set(false);
                     }
                 }

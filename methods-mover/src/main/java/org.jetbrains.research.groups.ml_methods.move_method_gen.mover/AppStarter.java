@@ -1,25 +1,23 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.mover;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.PsiElementFactoryImpl;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodHandler;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodProcessor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.AccessorsMap;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.ProjectAppStarter;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils.extractClasses;
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils.extractMethods;
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils.extractSourceJavaFiles;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils.*;
 
 public class AppStarter extends ProjectAppStarter {
     @Override
@@ -59,6 +57,14 @@ public class AppStarter extends ProjectAppStarter {
 
         SmartPsiElementPointer<PsiMethod> method = methodRef.get();
         SmartPsiElementPointer<PsiClass> clazz = classRef.get();
+
+        WriteCommandAction.runWriteCommandAction(project, () -> {
+            try {
+                rewriteMethod(method);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
 
         DumbService.getInstance(project).runWhenSmart(
             () -> {
@@ -124,5 +130,52 @@ public class AppStarter extends ProjectAppStarter {
             );
 
         moveMethodProcessor.run();
+    }
+
+    // todo: qualifiers, setters, (make static ??)
+    private void rewriteMethod(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
+        PsiMethod psiMethod = method.getElement();
+        if (psiMethod == null) {
+            // todo: throw
+            return;
+        }
+
+        AccessorsMap accessorsMap = new AccessorsMap(
+            Arrays.stream(psiMethod.getContainingClass().getAllMethods()).collect(Collectors.toList())
+        );
+
+        List<PsiReferenceExpression> allReferenceExpressions = new ArrayList<>();
+
+        new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitReferenceExpression(
+                final @NotNull PsiReferenceExpression expression
+            ) {
+                super.visitReferenceExpression(expression);
+                allReferenceExpressions.add(expression);
+            }
+        }.visitElement(psiMethod);
+
+        for (PsiReferenceExpression expression : allReferenceExpressions) {
+            Optional<PsiField> optional = MethodUtils.referencedNonPublicField(expression);
+            if (!optional.isPresent()) {
+                continue;
+            }
+
+            PsiField field = optional.get();
+
+            if (MethodUtils.isInLeftSideOfAssignment(expression)) {
+                // setter
+            } else {
+                // getter
+
+                PsiMethod getter = accessorsMap.getFieldToGetter().get(field);
+                PsiExpression getterCallExpression =
+                        PsiElementFactoryImpl.SERVICE.getInstance(method.getProject())
+                                .createExpressionFromText(getter.getName() + "()", expression);
+
+                expression.replace(getterCallExpression);
+            }
+        }
     }
 }

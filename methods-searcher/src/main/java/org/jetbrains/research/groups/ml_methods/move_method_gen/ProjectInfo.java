@@ -1,6 +1,5 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +9,6 @@ import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.Extracting
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.whoseGetter;
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.whoseSetter;
 
 public class ProjectInfo {
     private final @NotNull Project project;
@@ -29,9 +25,7 @@ public class ProjectInfo {
 
     private final @NotNull Set<PsiClass> allInterestingClasses;
 
-    private final @NotNull Map<PsiField, PsiMethod> fieldToGetter = new HashMap<>();
-
-    private final @NotNull Map<PsiField, PsiMethod> fieldToSetter = new HashMap<>();
+    private final @NotNull AccessorsMap accessorsMap;
 
     public ProjectInfo(final @NotNull Project project) {
         this.project = project;
@@ -53,14 +47,7 @@ public class ProjectInfo {
 
         allInterestingClasses = new HashSet<>(classes);
 
-        methods.forEach(it -> {
-            if (!it.hasModifierProperty(PsiModifier.PUBLIC)) {
-                return;
-            }
-
-            whoseGetter(it).ifPresent(field -> fieldToGetter.put(field, it));
-            whoseSetter(it).ifPresent(field -> fieldToSetter.put(field, it));
-        });
+        accessorsMap = new AccessorsMap(methods);
 
         methodsAfterFiltration =
             methods.stream()
@@ -111,16 +98,6 @@ public class ProjectInfo {
         return methodsAfterFiltration;
     }
 
-    @NotNull
-    public Map<PsiField, PsiMethod> getFieldToGetter() {
-        return fieldToGetter;
-    }
-
-    @NotNull
-    public Map<PsiField, PsiMethod> getFieldToSetter() {
-        return fieldToSetter;
-    }
-
     public @NotNull Set<PsiClass> possibleTargets(final @NotNull PsiMethod method) {
         Set<PsiClass> targets = new HashSet<>();
 
@@ -143,5 +120,10 @@ public class ProjectInfo {
         }
 
         return targets;
+    }
+
+    @NotNull
+    public AccessorsMap getAccessorsMap() {
+        return accessorsMap;
     }
 }
