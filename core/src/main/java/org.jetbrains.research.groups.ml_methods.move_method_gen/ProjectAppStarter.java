@@ -30,17 +30,6 @@ public abstract class ProjectAppStarter implements ApplicationStarter {
         }
 
         projectFolderPath = new File(args[1]).getAbsolutePath().replace(File.separatorChar, '/');
-
-        // Path tmp = Paths.get(projectFolderPath);
-        // outputDir = Paths.get(args[2]).resolve(tmp.getName(tmp.getNameCount() - 1));
-
-        // String logFileName = outputDir.resolve("log").toString();
-
-        /*try {
-            log.addAppender(new FileAppender(new PatternLayout("%d [%p] %m%n"), logFileName));
-        } catch (IOException e) {
-            System.err.println("Failed to open log file: " + logFileName);
-        }*/
     }
 
     @Override
@@ -87,7 +76,6 @@ public abstract class ProjectAppStarter implements ApplicationStarter {
             });
 
             run(project);
-            // doStuff(project, outputDir);
         } catch (Throwable e) {
             log.error("Exception occurred: " + e.getMessage() + " [" + e + "]");
             for (StackTraceElement element : e.getStackTrace()) {
