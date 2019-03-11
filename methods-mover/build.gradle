@@ -8,11 +8,11 @@ dependencies {
     compile project(':core')
 }
 
-task runChangeProject(dependsOn: runIde) {}
+task runMethodsMover(dependsOn: runIde) {}
 
 gradle.taskGraph.whenReady { graph ->
-    if (graph.hasTask(runChangeProject)) {
-        runIde.args 'change-project', "$projectFolder"
+    if (graph.hasTask(runMethodsMover)) {
+        runIde.args 'methods-mover', "$projectFolder"
         runIde.jvmArgs '-Djava.awt.headless=true'
     }
 }

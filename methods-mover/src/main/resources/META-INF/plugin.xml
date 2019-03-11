@@ -7,6 +7,6 @@
     <idea-version since-build="139"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <appStarter implementation="org.jetbrains.research.groups.ml_methods.move_method_gen.AppStarter"/>
+        <appStarter implementation="org.jetbrains.research.groups.ml_methods.move_method_gen.mover.AppStarter"/>
     </extensions>
 </idea-plugin>
