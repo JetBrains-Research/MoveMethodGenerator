@@ -1,0 +1,18 @@
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'idea'
+
+dependencies {
+    compile project(':core')
+}
+
+task runChangeProject(dependsOn: runIde) {}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(runChangeProject)) {
+        runIde.args 'change-project', "$projectFolder"
+        runIde.jvmArgs '-Djava.awt.headless=true'
+    }
+}
