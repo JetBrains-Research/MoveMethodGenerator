@@ -1,0 +1,7 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.6'
+}

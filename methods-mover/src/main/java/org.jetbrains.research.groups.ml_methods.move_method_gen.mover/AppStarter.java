@@ -9,17 +9,26 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.PsiElementFactoryImpl;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodHandler;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodProcessor;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.PatternLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.AccessorsMap;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.CsvSerializer;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.ProjectAppStarter;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils.*;
 
 public class AppStarter extends ProjectAppStarter {
+    private Path csvFilesDir;
+
     @Override
     public String getCommandName() {
         return "methods-mover";
@@ -29,15 +38,24 @@ public class AppStarter extends ProjectAppStarter {
     public void premain(String[] args) {
         super.premain(args);
 
-        if (args == null || args.length != 2) {
+        if (args == null || args.length != 3) {
             System.err.println("Invalid number of arguments!");
             System.exit(1);
             return;
         }
+
+        csvFilesDir = Paths.get(args[2]);
+
+        log.addAppender(new ConsoleAppender(new PatternLayout("%d [%p] %m%n")));
     }
 
     @Override
     protected void run(@NotNull Project project) throws Exception {
+        if (true) {
+            CsvSerializer.getInstance().deserialize(project, csvFilesDir);
+            return;
+        }
+
         final Ref<SmartPsiElementPointer<PsiMethod>> methodRef = new Ref<>(null);
         final Ref<SmartPsiElementPointer<PsiClass>> classRef = new Ref<>(null);
 

@@ -4,14 +4,12 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Ref;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.SmartPsiElementPointer;
+import com.intellij.psi.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
 import java.io.BufferedReader;
@@ -22,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -110,7 +109,8 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-
+                            Optional<PsiJavaFile> optional = JavaFileUtils.getFileByPath(project, record.get(2));
+                            System.out.println(optional.isPresent());
                         }
                     }
                 } catch (IOException exception) {
