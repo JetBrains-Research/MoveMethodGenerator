@@ -23,8 +23,6 @@ public class ProjectInfo {
 
     private final @NotNull List<PsiMethod> methodsAfterFiltration;
 
-    private final @NotNull Set<PsiClass> allInterestingClasses;
-
     private final @NotNull AccessorsMap accessorsMap;
 
     public ProjectInfo(final @NotNull Project project) {
@@ -45,8 +43,6 @@ public class ProjectInfo {
 
         methods = ExtractingUtils.extractMethods(classes);
 
-        allInterestingClasses = new HashSet<>(classes);
-
         accessorsMap = new AccessorsMap(methods);
 
         methodsAfterFiltration =
@@ -56,7 +52,7 @@ public class ProjectInfo {
                 .filter(new StaticMethodsFilter())
                 .filter(new GettersFilter())
                 .filter(new SettersFilter())
-                .filter(new NoTargetsMethodsFilter(this))
+                .filter(new NoTargetsMethodsFilter(new RelevantClasses(classes)))
                 .filter(new OverridingMethodsFilter())
                 .filter(new OverriddenMethodsFilter())
                 .filter(new PrivateMethodsCallersFilter())
@@ -96,30 +92,6 @@ public class ProjectInfo {
     @NotNull
     public List<PsiMethod> getMethodsAfterFiltration() {
         return methodsAfterFiltration;
-    }
-
-    public @NotNull Set<PsiClass> possibleTargets(final @NotNull PsiMethod method) {
-        Set<PsiClass> targets = new HashSet<>();
-
-        for (PsiParameter parameter : method.getParameterList().getParameters()) {
-            PsiType type = parameter.getType();
-            if (!(type instanceof PsiClassType)) {
-                continue;
-            }
-
-            PsiClassType classType = (PsiClassType) type;
-            PsiClass actualClass = classType.resolve();
-
-            if (
-                actualClass != null &&
-                allInterestingClasses.contains(actualClass) &&
-                !actualClass.equals(method.getContainingClass())
-            ) {
-                targets.add(actualClass);
-            }
-        }
-
-        return targets;
     }
 
     @NotNull

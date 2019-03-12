@@ -1,6 +1,7 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -21,18 +22,20 @@ public class Dataset {
 
     private final @NotNull List<Method> methods;
 
-    private Dataset(final @NotNull ProjectInfo projectInfo) {
+    private Dataset(
+        final @NotNull Project project,
+        final @NotNull RelevantClasses relevantClasses,
+        final @NotNull List<PsiMethod> relevantMethods
+    ) {
         List<PsiClass> psiClasses = Stream.concat(
-            projectInfo.getMethodsAfterFiltration()
-                .stream()
-                .flatMap(it -> projectInfo.possibleTargets(it).stream()),
-            projectInfo.getMethodsAfterFiltration()
-                .stream()
+            relevantMethods.stream()
+                .flatMap(it -> relevantClasses.possibleTargets(it).stream()),
+            relevantMethods.stream()
                 .map(PsiMember::getContainingClass)
         ).collect(Collectors.toList());
 
         classes = psiClasses.stream().map(
-            it -> SmartPointerManager.getInstance(projectInfo.getProject())
+            it -> SmartPointerManager.getInstance(project)
                                      .createSmartPsiElementPointer(it)
         ).collect(Collectors.toList());
 
@@ -45,15 +48,18 @@ public class Dataset {
         }
 
         methods =
-            projectInfo.getMethodsAfterFiltration()
-                .stream()
-                .map(it -> new Method(it, projectInfo, idOfClass))
+            relevantMethods.stream()
+                .map(it -> new Method(project, it, relevantClasses, idOfClass))
                 .collect(Collectors.toList());
     }
 
-    public static @NotNull Dataset createDataset(final @NotNull ProjectInfo projectInfo) {
+    public static @NotNull Dataset createDataset(
+        final @NotNull Project project,
+        final @NotNull RelevantClasses relevantClasses,
+        final @NotNull List<PsiMethod> relevantMethods
+    ) {
         return ApplicationManager.getApplication().runReadAction(
-            (Computable<Dataset>) () -> new Dataset(projectInfo)
+            (Computable<Dataset>) () -> new Dataset(project, relevantClasses, relevantMethods)
         );
     }
 
@@ -73,18 +79,19 @@ public class Dataset {
         private final @NotNull int[] idsOfPossibleTargets;
 
         private Method(
+            final @NotNull Project project,
             final @NotNull PsiMethod psiMethod,
-            final @NotNull ProjectInfo projectInfo,
+            final @NotNull RelevantClasses relevantClasses,
             final @NotNull Map<PsiClass, Integer> idOfClass
         ) {
             this.psiMethod =
-                SmartPointerManager.getInstance(projectInfo.getProject())
+                SmartPointerManager.getInstance(project)
                     .createSmartPsiElementPointer(psiMethod);
 
             idOfContainingClass = idOfClass.get(psiMethod.getContainingClass());
 
             idsOfPossibleTargets =
-                projectInfo.possibleTargets(psiMethod).stream().mapToInt(idOfClass::get).toArray();
+                relevantClasses.possibleTargets(psiMethod).stream().mapToInt(idOfClass::get).toArray();
         }
 
         public @NotNull SmartPsiElementPointer<PsiMethod> getPsiMethod() {

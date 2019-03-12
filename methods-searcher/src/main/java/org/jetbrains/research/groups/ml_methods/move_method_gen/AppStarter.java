@@ -56,7 +56,14 @@ public class AppStarter extends ProjectAppStarter {
                     log.info("Number of methods after filtration: " + info.getMethodsAfterFiltration().size());
 
                     try {
-                        CsvSerializer.getInstance().serialize(Dataset.createDataset(info), outputDir);
+                        CsvSerializer.getInstance().serialize(
+                            Dataset.createDataset(
+                                info.getProject(),
+                                new RelevantClasses(info.getClasses()),
+                                info.getMethodsAfterFiltration()
+                            ),
+                            outputDir
+                        );
                     } catch (Exception e) {
                         exceptionRef.set(e);
                     }

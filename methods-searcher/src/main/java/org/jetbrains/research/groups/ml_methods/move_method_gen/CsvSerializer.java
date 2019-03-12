@@ -1,6 +1,7 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiClass;
@@ -9,9 +10,11 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.SmartPsiElementPointer;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -82,6 +85,32 @@ public class CsvSerializer {
                                 method.getIdOfContainingClass(),
                                 Arrays.stream(method.getIdsOfPossibleTargets()).mapToObj(Integer::toString).collect(Collectors.joining(" "))
                             );
+                        }
+                    }
+                } catch (IOException exception) {
+                    exceptionRef.set(exception);
+                }
+            }
+        );
+
+        if (!exceptionRef.isNull()) {
+            throw exceptionRef.get();
+        }
+    }
+
+    public void deserialize(
+        final @NotNull Project project,
+        final @NotNull Path dir
+    ) throws IOException {
+        Ref<IOException> exceptionRef = new Ref<>(null);
+        ApplicationManager.getApplication().runReadAction(
+            () -> {
+                try {
+                    try (
+                        BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
+                    ) {
+                        for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
+
                         }
                     }
                 } catch (IOException exception) {
