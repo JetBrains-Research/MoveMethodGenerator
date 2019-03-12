@@ -1,8 +1,8 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMember;
-import com.intellij.psi.PsiMethod;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.util.Computable;
+import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -17,14 +17,12 @@ import java.util.stream.Stream;
  * modifications on resulting dataset during runtime.
  */
 public class Dataset {
-    private final @NotNull List<PsiClass> classes;
+    private final @NotNull List<SmartPsiElementPointer<PsiClass>> classes;
 
     private final @NotNull List<Method> methods;
 
-    private final @NotNull Map<PsiClass, Integer> idOfClass = new HashMap<>();
-
-    public Dataset(final @NotNull ProjectInfo projectInfo) {
-        classes = Stream.concat(
+    private Dataset(final @NotNull ProjectInfo projectInfo) {
+        List<PsiClass> psiClasses = Stream.concat(
             projectInfo.getMethodsAfterFiltration()
                 .stream()
                 .flatMap(it -> projectInfo.possibleTargets(it).stream()),
@@ -33,8 +31,15 @@ public class Dataset {
                 .map(PsiMember::getContainingClass)
         ).collect(Collectors.toList());
 
+        classes = psiClasses.stream().map(
+            it -> SmartPointerManager.getInstance(projectInfo.getProject())
+                                     .createSmartPsiElementPointer(it)
+        ).collect(Collectors.toList());
+
+        Map<PsiClass, Integer> idOfClass = new HashMap<>();
+
         int classId = 0;
-        for (PsiClass clazz : classes) {
+        for (PsiClass clazz : psiClasses) {
             idOfClass.put(clazz, classId);
             classId++;
         }
@@ -42,11 +47,17 @@ public class Dataset {
         methods =
             projectInfo.getMethodsAfterFiltration()
                 .stream()
-                .map(it -> new Method(it, projectInfo))
+                .map(it -> new Method(it, projectInfo, idOfClass))
                 .collect(Collectors.toList());
     }
 
-    public List<PsiClass> getClasses() {
+    public static @NotNull Dataset createDataset(final @NotNull ProjectInfo projectInfo) {
+        return ApplicationManager.getApplication().runReadAction(
+            (Computable<Dataset>) () -> new Dataset(projectInfo)
+        );
+    }
+
+    public List<SmartPsiElementPointer<PsiClass>> getClasses() {
         return Collections.unmodifiableList(classes);
     }
 
@@ -55,14 +66,20 @@ public class Dataset {
     }
 
     public class Method {
-        private final @NotNull PsiMethod psiMethod;
+        private final @NotNull SmartPsiElementPointer<PsiMethod> psiMethod;
 
         private final int idOfContainingClass;
 
         private final @NotNull int[] idsOfPossibleTargets;
 
-        public Method(final @NotNull PsiMethod psiMethod, final @NotNull ProjectInfo projectInfo) {
-            this.psiMethod = psiMethod;
+        private Method(
+            final @NotNull PsiMethod psiMethod,
+            final @NotNull ProjectInfo projectInfo,
+            final @NotNull Map<PsiClass, Integer> idOfClass
+        ) {
+            this.psiMethod =
+                SmartPointerManager.getInstance(projectInfo.getProject())
+                    .createSmartPsiElementPointer(psiMethod);
 
             idOfContainingClass = idOfClass.get(psiMethod.getContainingClass());
 
@@ -70,7 +87,7 @@ public class Dataset {
                 projectInfo.possibleTargets(psiMethod).stream().mapToInt(idOfClass::get).toArray();
         }
 
-        public @NotNull PsiMethod getPsiMethod() {
+        public @NotNull SmartPsiElementPointer<PsiMethod> getPsiMethod() {
             return psiMethod;
         }
 

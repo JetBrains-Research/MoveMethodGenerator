@@ -1,8 +1,12 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.SmartPsiElementPointer;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.jetbrains.annotations.NotNull;
@@ -39,40 +43,55 @@ public class CsvSerializer {
     ) throws IOException {
         targetDir.toFile().mkdirs();
 
-        try (
-            BufferedWriter writer = Files.newBufferedWriter(targetDir.resolve(CLASSES_FILE_NAME), CREATE_NEW);
-            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.RFC4180)
-        ) {
-            List<PsiClass> classes = dataset.getClasses();
-            for (int classId = 0; classId < classes.size(); classId++) {
-                PsiClass clazz = classes.get(classId);
+        Ref<IOException> exceptionRef = new Ref<>(null);
+        ApplicationManager.getApplication().runReadAction(
+            () -> {
+                try {
+                    try (
+                        BufferedWriter writer = Files.newBufferedWriter(targetDir.resolve(CLASSES_FILE_NAME), CREATE_NEW);
+                        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.RFC4180)
+                    ) {
+                        List<PsiClass> classes = dataset.getClasses().stream().map(SmartPsiElementPointer::getElement).collect(Collectors.toList());
+                        for (int classId = 0; classId < classes.size(); classId++) {
+                            PsiClass clazz = classes.get(classId);
 
-                csvPrinter.printRecord(
-                    classId,
-                    clazz.getQualifiedName(),
-                    getPathToContainingFile(clazz),
-                    clazz.getNode().getStartOffset()
-                );
+                            csvPrinter.printRecord(
+                                classId,
+                                clazz.getQualifiedName(),
+                                getPathToContainingFile(clazz),
+                                clazz.getNode().getStartOffset()
+                            );
+                        }
+                    }
+
+                    try (
+                        BufferedWriter writer = Files.newBufferedWriter(targetDir.resolve(METHODS_FILE_NAME), CREATE_NEW);
+                        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.RFC4180)
+                    ) {
+                        List<Dataset.Method> methods = dataset.getMethods();
+                        for (int methodId = 0; methodId < methods.size(); methodId++) {
+                            Dataset.Method method = methods.get(methodId);
+
+                            PsiMethod psiMethod = method.getPsiMethod().getElement();
+
+                            csvPrinter.printRecord(
+                                methodId,
+                                MethodUtils.fullyQualifiedName(psiMethod),
+                                getPathToContainingFile(psiMethod),
+                                psiMethod.getNode().getStartOffset(),
+                                method.getIdOfContainingClass(),
+                                Arrays.stream(method.getIdsOfPossibleTargets()).mapToObj(Integer::toString).collect(Collectors.joining(" "))
+                            );
+                        }
+                    }
+                } catch (IOException exception) {
+                    exceptionRef.set(exception);
+                }
             }
-        }
+        );
 
-        try (
-            BufferedWriter writer = Files.newBufferedWriter(targetDir.resolve(METHODS_FILE_NAME), CREATE_NEW);
-            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.RFC4180)
-        ) {
-            List<Dataset.Method> methods = dataset.getMethods();
-            for (int methodId = 0; methodId < methods.size(); methodId++) {
-                Dataset.Method method = methods.get(methodId);
-
-                csvPrinter.printRecord(
-                    methodId,
-                    MethodUtils.fullyQualifiedName(method.getPsiMethod()),
-                    getPathToContainingFile(method.getPsiMethod()),
-                    method.getPsiMethod().getNode().getStartOffset(),
-                    method.getIdOfContainingClass(),
-                    Arrays.stream(method.getIdsOfPossibleTargets()).mapToObj(Integer::toString).collect(Collectors.joining(" "))
-                );
-            }
+        if (!exceptionRef.isNull()) {
+            throw exceptionRef.get();
         }
     }
 
