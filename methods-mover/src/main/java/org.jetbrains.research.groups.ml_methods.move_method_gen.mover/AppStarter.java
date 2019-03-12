@@ -15,6 +15,7 @@ import org.apache.log4j.PatternLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.AccessorsMap;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.CsvSerializer;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.Dataset;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.ProjectAppStarter;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
@@ -51,48 +52,27 @@ public class AppStarter extends ProjectAppStarter {
 
     @Override
     protected void run(@NotNull Project project) throws Exception {
-        if (true) {
-            CsvSerializer.getInstance().deserialize(project, csvFilesDir);
-            return;
-        }
+        Dataset dataset = CsvSerializer.getInstance().deserialize(project, csvFilesDir);
 
-        final Ref<SmartPsiElementPointer<PsiMethod>> methodRef = new Ref<>(null);
-        final Ref<SmartPsiElementPointer<PsiClass>> classRef = new Ref<>(null);
-
-        ApplicationManager.getApplication().runReadAction(
-            () -> {
-                List<PsiJavaFile> javaFiles = extractSourceJavaFiles(project);
-                List<PsiClass> javaClasses = extractClasses(javaFiles);
-                List<PsiMethod> javaMethods = extractMethods(javaClasses);
-
-                PsiMethod method = javaMethods.stream().filter(it -> it.getName().equals("foo")).findFirst().get();
-                PsiClass clazz = javaClasses.stream().filter(it -> it.getName().equals("B")).findFirst().get();
-
-                methodRef.set(SmartPointerManager.getInstance(project).createSmartPsiElementPointer(method));
-                classRef.set(SmartPointerManager.getInstance(project).createSmartPsiElementPointer(clazz));
-            }
-        );
-
-        SmartPsiElementPointer<PsiMethod> method = methodRef.get();
-        SmartPsiElementPointer<PsiClass> clazz = classRef.get();
-
-        WriteCommandAction.runWriteCommandAction(project, () -> {
-            try {
-                rewriteMethod(method);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
-
-        DumbService.getInstance(project).runWhenSmart(
-            () -> {
+        for (Dataset.Method method : dataset.getMethods()) {
+            WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
-                    moveMethod(project, method, clazz);
+                    rewriteMethod(method.getPsiMethod());
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-            }
-        );
+            });
+
+            DumbService.getInstance(project).runWhenSmart(
+                () -> {
+                    try {
+                        moveMethod(project, method.getPsiMethod(), dataset.getClasses().get(method.getIdsOfPossibleTargets()[0]));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            );
+        }
     }
 
     private void moveMethod(
@@ -134,9 +114,9 @@ public class AppStarter extends ProjectAppStarter {
         PsiVariable targetVariable = possibleTargetVariables.get(0);
         Map<PsiClass, String> parameterNames = MoveInstanceMethodHandler.suggestParameterNames(psiMethod, targetVariable);
 
-        for (Map.Entry<PsiClass, String> entry : parameterNames.entrySet()) {
+        /*for (Map.Entry<PsiClass, String> entry : parameterNames.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
-        }
+        }*/
 
         MoveInstanceMethodProcessor moveMethodProcessor =
             new MoveInstanceMethodProcessor(

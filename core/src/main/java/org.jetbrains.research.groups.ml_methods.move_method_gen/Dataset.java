@@ -53,6 +53,18 @@ public class Dataset {
                 .collect(Collectors.toList());
     }
 
+    public Dataset(
+        final @NotNull Project project,
+        final @NotNull List<PsiClass> classes,
+        final @NotNull List<Method> methods
+    ) {
+        this.classes = classes.stream()
+            .map(it -> SmartPointerManager.getInstance(project).createSmartPsiElementPointer(it))
+            .collect(Collectors.toList());
+
+        this.methods = methods;
+    }
+
     public static @NotNull Dataset createDataset(
         final @NotNull Project project,
         final @NotNull RelevantClasses relevantClasses,
@@ -71,7 +83,7 @@ public class Dataset {
         return Collections.unmodifiableList(methods);
     }
 
-    public class Method {
+    public static class Method {
         private final @NotNull SmartPsiElementPointer<PsiMethod> psiMethod;
 
         private final int idOfContainingClass;
@@ -92,6 +104,19 @@ public class Dataset {
 
             idsOfPossibleTargets =
                 relevantClasses.possibleTargets(psiMethod).stream().mapToInt(idOfClass::get).toArray();
+        }
+
+        public Method(
+            final @NotNull Project project,
+            final @NotNull PsiMethod method,
+            final int idOfContainingClass,
+            final @NotNull int[] idsOfPossibleTargets
+        ) {
+            this.psiMethod = SmartPointerManager.getInstance(project)
+                .createSmartPsiElementPointer(method);
+
+            this.idOfContainingClass = idOfContainingClass;
+            this.idsOfPossibleTargets = idsOfPossibleTargets;
         }
 
         public @NotNull SmartPsiElementPointer<PsiMethod> getPsiMethod() {

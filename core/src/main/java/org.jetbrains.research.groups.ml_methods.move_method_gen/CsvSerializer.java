@@ -18,12 +18,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getClassByLocation;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getMethodByLocation;
 
 public class CsvSerializer {
     private static final @NotNull CsvSerializer INSTANCE = new CsvSerializer();
@@ -97,31 +100,81 @@ public class CsvSerializer {
         }
     }
 
-    public void deserialize(
+    public @NotNull Dataset deserialize(
         final @NotNull Project project,
         final @NotNull Path dir
     ) throws IOException {
         Ref<IOException> exceptionRef = new Ref<>(null);
-        ApplicationManager.getApplication().runReadAction(
-            () -> {
+        Dataset dataset = ApplicationManager.getApplication().runReadAction(
+            (Computable<Dataset>) () -> {
                 try {
+                    List<PsiClass> classes = new ArrayList<>();
+
                     try (
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-                            Optional<PsiJavaFile> optional = JavaFileUtils.getFileByPath(project, record.get(2));
-                            System.out.println(optional.isPresent());
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2));
+                            if (!fileOptional.isPresent()) {
+                                // todo: throw
+                            }
+
+                            PsiJavaFile file = fileOptional.get();
+                            String className = record.get(1);
+                            int classOffset = Integer.parseInt(record.get(3)); // todo: catch exception
+
+                            Optional<PsiClass> classOptional = getClassByLocation(file, className, classOffset);
+
+                            if (!classOptional.isPresent()) {
+                                // todo: throw
+                            }
+
+                            classes.add(classOptional.get());
                         }
                     }
+
+                    List<Dataset.Method> methods = new ArrayList<>();
+                    try (
+                        BufferedReader reader = Files.newBufferedReader(dir.resolve(METHODS_FILE_NAME));
+                    ) {
+                        for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2));
+                            if (!fileOptional.isPresent()) {
+                                // todo: throw
+                            }
+
+                            PsiJavaFile file = fileOptional.get();
+                            String methodName = record.get(1);
+                            int methodOffset = Integer.parseInt(record.get(3)); // todo: catch exception
+
+                            Optional<PsiMethod> methodOptional = getMethodByLocation(file, methodName, methodOffset);
+
+                            if (!methodOptional.isPresent()) {
+                                // todo: throw
+                            }
+
+                            int idOfContainingClass = Integer.parseInt(record.get(4)); // todo: catch exception
+
+                            int[] idsOfPossibleTargets = Arrays.stream(record.get(5).split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
+
+                            methods.add(new Dataset.Method(project, methodOptional.get(), idOfContainingClass, idsOfPossibleTargets));
+                        }
+                    }
+
+                    return new Dataset(project, classes, methods);
                 } catch (IOException exception) {
                     exceptionRef.set(exception);
                 }
+
+                return null;
             }
         );
 
         if (!exceptionRef.isNull()) {
             throw exceptionRef.get();
         }
+
+        return dataset;
     }
 
     private @NotNull Path getPathToContainingFile(final @NotNull PsiElement element) {

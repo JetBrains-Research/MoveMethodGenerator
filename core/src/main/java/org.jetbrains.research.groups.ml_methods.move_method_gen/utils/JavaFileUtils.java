@@ -1,12 +1,10 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.utils;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiManager;
+import com.intellij.psi.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -61,5 +59,53 @@ public class JavaFileUtils {
         }
 
         return Optional.of(directory);
+    }
+
+    public static @NotNull Optional<PsiClass> getClassByLocation(
+        final @NotNull PsiJavaFile file,
+        final @NotNull String className,
+        final int classOffset
+    ) {
+        Ref<PsiClass> resultRef = new Ref<>(null);
+
+        new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitClass(final @NotNull PsiClass aClass) {
+                super.visitClass(aClass);
+
+                if (
+                    className.equals(aClass.getQualifiedName()) &&
+                    classOffset == aClass.getNode().getStartOffset()
+                ) {
+                    resultRef.set(aClass);
+                }
+            }
+        }.visitElement(file);
+
+        return Optional.ofNullable(resultRef.get());
+    }
+
+    public static @NotNull Optional<PsiMethod> getMethodByLocation(
+        final @NotNull PsiJavaFile file,
+        final @NotNull String methodName,
+        final int methodOffset
+    ) {
+        Ref<PsiMethod> resultRef = new Ref<>(null);
+
+        new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethod(final @NotNull PsiMethod method) {
+                super.visitMethod(method);
+
+                if (
+                    methodName.equals(MethodUtils.fullyQualifiedName(method)) &&
+                    methodOffset == method.getNode().getStartOffset()
+                ) {
+                    resultRef.set(method);
+                }
+            }
+        }.visitElement(file);
+
+        return Optional.ofNullable(resultRef.get());
     }
 }
