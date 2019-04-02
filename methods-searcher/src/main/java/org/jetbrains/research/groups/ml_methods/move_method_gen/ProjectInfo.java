@@ -39,6 +39,7 @@ public class ProjectInfo {
                 .filter(new TestsFilter())
                 .filter(new BuildersFilter())
                 .filter(new EmptyClassesFilter())
+                .filter(new AnonymousClassesFilter())
                 .collect(Collectors.toList());
 
         methods = ExtractingUtils.extractMethods(classes);
