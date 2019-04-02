@@ -9,6 +9,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.exceptions.InvalidCsvInputException;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getClassByLocation;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getDirectoryWithRootPackageFor;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getMethodByLocation;
 
 public class CsvSerializer {
@@ -103,8 +105,8 @@ public class CsvSerializer {
     public @NotNull Dataset deserialize(
         final @NotNull Project project,
         final @NotNull Path dir
-    ) throws IOException {
-        Ref<IOException> exceptionRef = new Ref<>(null);
+    ) throws Exception {
+        Ref<Exception> exceptionRef = new Ref<>(null);
         Dataset dataset = ApplicationManager.getApplication().runReadAction(
             (Computable<Dataset>) () -> {
                 try {
@@ -126,7 +128,7 @@ public class CsvSerializer {
                             Optional<PsiClass> classOptional = getClassByLocation(file, className, classOffset);
 
                             if (!classOptional.isPresent()) {
-                                // todo: throw
+                                throw new InvalidCsvInputException("Failed to find class '" + className + "' at " + getPathToContainingFile(file) + ":" + classOffset);
                             }
 
                             classes.add(classOptional.get());
@@ -162,7 +164,7 @@ public class CsvSerializer {
                     }
 
                     return new Dataset(project, classes, methods);
-                } catch (IOException exception) {
+                } catch (IOException | InvalidCsvInputException exception) {
                     exceptionRef.set(exception);
                 }
 
