@@ -1,5 +1,6 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.mover;
 
+import com.google.common.collect.Lists;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
@@ -139,6 +140,9 @@ public class AppStarter extends ProjectAppStarter {
             }
         }.visitElement(psiMethod);
 
+        // this way the order is from leaves to AST root
+        Collections.reverse(allReferenceExpressions);
+
         for (PsiReferenceExpression expression : allReferenceExpressions) {
             Optional<PsiField> optional = MethodUtils.referencedNonPublicField(expression);
             if (!optional.isPresent()) {
@@ -149,6 +153,15 @@ public class AppStarter extends ProjectAppStarter {
 
             if (MethodUtils.isInLeftSideOfAssignment(expression)) {
                 // setter
+
+                PsiMethod setter = accessorsMap.getFieldToSetter().get(field);
+
+                PsiAssignmentExpression assignment = (PsiAssignmentExpression) expression.getParent();
+                PsiExpression setterCallExpression =
+                        PsiElementFactoryImpl.SERVICE.getInstance(method.getProject())
+                            .createExpressionFromText(setter.getName() + "(" + assignment.getRExpression().getText()  + ")", expression);
+
+                assignment.replace(setterCallExpression);
             } else {
                 // getter
 
