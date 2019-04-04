@@ -53,6 +53,11 @@ public class AppStarter extends ProjectAppStarter {
                     log.info("Total number of source java files: " + info.getSourceJavaFiles().size());
                     log.info("Total number of classes: " + info.getClasses().size());
                     log.info("Total number of methods: " + info.getMethods().size());
+
+                    info.getMethodsFilters().forEach(filter -> {
+                        log.info(filter.getDescription());
+                    });
+
                     log.info("Number of methods after filtration: " + info.getMethodsAfterFiltration().size());
 
                     try {

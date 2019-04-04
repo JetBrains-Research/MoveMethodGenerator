@@ -4,13 +4,14 @@ import com.intellij.openapi.util.Ref;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.ProjectInfo;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.Filter;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class PrivateFieldAccessorsFilter implements Predicate<PsiMethod> {
+public class PrivateFieldAccessorsFilter implements Filter<PsiMethod> {
     private final @NotNull ProjectInfo projectInfo;
 
     public PrivateFieldAccessorsFilter(final @NotNull ProjectInfo projectInfo) {

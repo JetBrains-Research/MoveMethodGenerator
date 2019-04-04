@@ -3,6 +3,8 @@ package org.jetbrains.research.groups.ml_methods.move_method_gen;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.Filter;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.FilterWithCounter;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.classes.*;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.methods.*;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.ExtractingUtils;
@@ -19,7 +21,20 @@ public class ProjectInfo {
 
     private final @NotNull List<PsiClass> classes;
 
+    private final @NotNull List<Filter<PsiClass>> classFilters =
+            new ArrayList<Filter<PsiClass>>() {{
+                add(new TypeParametersFilter());
+                add(new InterfacesFilter());
+                add(new AnnotationTypesFilter());
+                add(new TestsFilter());
+                add(new BuildersFilter());
+                add(new EmptyClassesFilter());
+                add(new AnonymousClassesFilter());
+            }};
+
     private final @NotNull List<PsiMethod> methods;
+
+    private final @NotNull List<FilterWithCounter<PsiMethod>> methodsFilters;
 
     private final @NotNull List<PsiMethod> methodsAfterFiltration;
 
@@ -33,35 +48,49 @@ public class ProjectInfo {
 
         classes = ExtractingUtils.extractClasses(sourceJavaFiles)
                 .stream()
-                .filter(new TypeParametersFilter())
-                .filter(new InterfacesFilter())
-                .filter(new AnnotationTypesFilter())
-                .filter(new TestsFilter())
-                .filter(new BuildersFilter())
-                .filter(new EmptyClassesFilter())
-                .filter(new AnonymousClassesFilter())
+                .filter(it -> {
+                    for (Filter<PsiClass> filter : classFilters) {
+                        if (!filter.test(it)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
                 .collect(Collectors.toList());
 
         methods = ExtractingUtils.extractMethods(classes);
-
         accessorsMap = new AccessorsMap(methods);
+
+        methodsFilters =
+            new ArrayList<FilterWithCounter<PsiMethod>>() {{
+                add(new FilterWithCounter<>(new StaticMethodsFilter()));
+                add(new FilterWithCounter<>(new ConstructorsFilter()));
+                add(new FilterWithCounter<>(new AbstractMethodsFilter()));
+                add(new FilterWithCounter<>(new GettersFilter()));
+                add(new FilterWithCounter<>(new SettersFilter()));
+                add(new FilterWithCounter<>(new EmptyMethodsFilter()));
+                add(new FilterWithCounter<>(new ExceptionsThrowersFilter()));
+                add(new FilterWithCounter<>(new SingleMethodFilter()));
+                add(new FilterWithCounter<>(new SimpleDelegationsFilter()));
+                add(new FilterWithCounter<>(new PrivateMethodsCallersFilter()));
+                add(new FilterWithCounter<>(new PrivateFieldAccessorsFilter(ProjectInfo.this)));
+                add(new FilterWithCounter<>(new OverridingMethodsFilter()));
+                add(new FilterWithCounter<>(new OverriddenMethodsFilter()));
+                add(new FilterWithCounter<>(new NoTargetsMethodsFilter(new RelevantClasses(classes))));
+            }};
 
         methodsAfterFiltration =
             methods.stream()
-                .filter(new ConstructorsFilter())
-                .filter(new AbstractMethodsFilter())
-                .filter(new StaticMethodsFilter())
-                .filter(new GettersFilter())
-                .filter(new SettersFilter())
-                .filter(new NoTargetsMethodsFilter(new RelevantClasses(classes)))
-                .filter(new OverridingMethodsFilter())
-                .filter(new OverriddenMethodsFilter())
-                .filter(new PrivateMethodsCallersFilter())
-                .filter(new PrivateFieldAccessorsFilter(this))
-                .filter(new EmptyMethodsFilter())
-                .filter(new ExceptionsThrowersFilter())
-                .filter(new SimpleDelegationsFilter())
-                .filter(new SingleMethodFilter())
+                .filter(it -> {
+                    for (Filter<PsiMethod> filter : methodsFilters) {
+                        if (!filter.test(it)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -88,6 +117,11 @@ public class ProjectInfo {
     @NotNull
     public List<PsiMethod> getMethods() {
         return methods;
+    }
+
+    @NotNull
+    public List<FilterWithCounter<PsiMethod>> getMethodsFilters() {
+        return methodsFilters;
     }
 
     @NotNull

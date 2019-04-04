@@ -2,10 +2,11 @@ package org.jetbrains.research.groups.ml_methods.move_method_gen.filters.methods
 
 import com.intellij.psi.PsiMethod;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.Filter;
 
 import java.util.function.Predicate;
 
-public class SingleMethodFilter implements Predicate<PsiMethod> {
+public class SingleMethodFilter implements Filter<PsiMethod> {
     private static final @NotNull EmptyMethodsFilter isNotEmpty = new EmptyMethodsFilter();
 
     @Override

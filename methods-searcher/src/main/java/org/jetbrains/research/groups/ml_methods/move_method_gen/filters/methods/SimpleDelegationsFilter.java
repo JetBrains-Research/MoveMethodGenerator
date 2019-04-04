@@ -3,6 +3,7 @@ package org.jetbrains.research.groups.ml_methods.move_method_gen.filters.methods
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.Filter;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.getSingleStatementOf;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.isConstExpression;
 
-public class SimpleDelegationsFilter implements Predicate<PsiMethod> {
+public class SimpleDelegationsFilter implements Filter<PsiMethod> {
     @Override
     public boolean test(final @NotNull PsiMethod psiMethod) {
         Set<PsiParameter> parameters =

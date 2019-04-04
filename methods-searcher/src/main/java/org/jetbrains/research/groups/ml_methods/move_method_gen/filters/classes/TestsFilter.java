@@ -6,13 +6,14 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiJavaFile;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.filters.Filter;
 
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getDirectoryWithRootPackageFor;
 
-public class TestsFilter implements Predicate<PsiClass> {
+public class TestsFilter implements Filter<PsiClass> {
     @Override
     public boolean test(final @NotNull PsiClass psiClass) {
         VirtualFile virtualFile = psiClass.getContainingFile().getVirtualFile();
