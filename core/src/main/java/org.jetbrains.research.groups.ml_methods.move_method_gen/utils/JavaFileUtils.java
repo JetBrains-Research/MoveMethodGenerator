@@ -1,5 +1,6 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.utils;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -15,11 +16,16 @@ public class JavaFileUtils {
 
     public static @NotNull Optional<PsiJavaFile> getFileByPath(
         final @NotNull Project project,
-        final @NotNull String path
+        final @NotNull String path,
+        final boolean refresh
     ) {
         VirtualFile virtualFile = project.getBaseDir().findFileByRelativePath(path);
         if (virtualFile == null) {
             return Optional.empty();
+        }
+
+        if (refresh) {
+            virtualFile.refresh(false, false);
         }
 
         PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);

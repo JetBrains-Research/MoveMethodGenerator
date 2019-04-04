@@ -116,7 +116,7 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2));
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2), true);
                             if (!fileOptional.isPresent()) {
                                 // todo: throw
                             }
@@ -140,7 +140,7 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(METHODS_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2));
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2), true);
                             if (!fileOptional.isPresent()) {
                                 // todo: throw
                             }
