@@ -31,6 +31,8 @@ hs_err_pid*
 .idea/**/tasks.xml
 .idea/dictionaries
 
+*.iml
+
 **/.gradle/**
 
 build/**

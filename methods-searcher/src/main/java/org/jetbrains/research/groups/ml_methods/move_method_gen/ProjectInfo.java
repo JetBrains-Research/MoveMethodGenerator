@@ -1,6 +1,5 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +9,6 @@ import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.Extracting
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.whoseGetter;
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.whoseSetter;
 
 public class ProjectInfo {
     private final @NotNull Project project;
@@ -27,11 +23,7 @@ public class ProjectInfo {
 
     private final @NotNull List<PsiMethod> methodsAfterFiltration;
 
-    private final @NotNull Set<PsiClass> allInterestingClasses;
-
-    private final @NotNull Map<PsiField, PsiMethod> fieldToGetter = new HashMap<>();
-
-    private final @NotNull Map<PsiField, PsiMethod> fieldToSetter = new HashMap<>();
+    private final @NotNull AccessorsMap accessorsMap;
 
     public ProjectInfo(final @NotNull Project project) {
         this.project = project;
@@ -47,20 +39,12 @@ public class ProjectInfo {
                 .filter(new TestsFilter())
                 .filter(new BuildersFilter())
                 .filter(new EmptyClassesFilter())
+                .filter(new AnonymousClassesFilter())
                 .collect(Collectors.toList());
 
         methods = ExtractingUtils.extractMethods(classes);
 
-        allInterestingClasses = new HashSet<>(classes);
-
-        methods.forEach(it -> {
-            if (!it.hasModifierProperty(PsiModifier.PUBLIC)) {
-                return;
-            }
-
-            whoseGetter(it).ifPresent(field -> fieldToGetter.put(field, it));
-            whoseSetter(it).ifPresent(field -> fieldToSetter.put(field, it));
-        });
+        accessorsMap = new AccessorsMap(methods);
 
         methodsAfterFiltration =
             methods.stream()
@@ -69,7 +53,7 @@ public class ProjectInfo {
                 .filter(new StaticMethodsFilter())
                 .filter(new GettersFilter())
                 .filter(new SettersFilter())
-                .filter(new NoTargetsMethodsFilter(this))
+                .filter(new NoTargetsMethodsFilter(new RelevantClasses(classes)))
                 .filter(new OverridingMethodsFilter())
                 .filter(new OverriddenMethodsFilter())
                 .filter(new PrivateMethodsCallersFilter())
@@ -112,36 +96,7 @@ public class ProjectInfo {
     }
 
     @NotNull
-    public Map<PsiField, PsiMethod> getFieldToGetter() {
-        return fieldToGetter;
-    }
-
-    @NotNull
-    public Map<PsiField, PsiMethod> getFieldToSetter() {
-        return fieldToSetter;
-    }
-
-    public @NotNull Set<PsiClass> possibleTargets(final @NotNull PsiMethod method) {
-        Set<PsiClass> targets = new HashSet<>();
-
-        for (PsiParameter parameter : method.getParameterList().getParameters()) {
-            PsiType type = parameter.getType();
-            if (!(type instanceof PsiClassType)) {
-                continue;
-            }
-
-            PsiClassType classType = (PsiClassType) type;
-            PsiClass actualClass = classType.resolve();
-
-            if (
-                actualClass != null &&
-                allInterestingClasses.contains(actualClass) &&
-                !actualClass.equals(method.getContainingClass())
-            ) {
-                targets.add(actualClass);
-            }
-        }
-
-        return targets;
+    public AccessorsMap getAccessorsMap() {
+        return accessorsMap;
     }
 }

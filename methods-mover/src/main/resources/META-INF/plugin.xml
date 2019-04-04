@@ -1,0 +1,12 @@
+<idea-plugin url="https://github.com/ml-in-programming/RefactoringDataSet">
+    <name>MoveMethodGenerator</name>
+    <id>MoveMethodGenerator</id>
+    <depends>com.intellij.modules.lang</depends>
+
+    <version>0.1</version>
+    <idea-version since-build="139"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <appStarter implementation="org.jetbrains.research.groups.ml_methods.move_method_gen.mover.AppStarter"/>
+    </extensions>
+</idea-plugin>

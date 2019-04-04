@@ -1,0 +1,18 @@
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'idea'
+
+dependencies {
+    compile project(':core')
+}
+
+task runMethodsMover(dependsOn: runIde) {}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(runMethodsMover)) {
+        runIde.args 'methods-mover', "$projectFolder", "$csvFilesDir"
+        runIde.jvmArgs '-Djava.awt.headless=true'
+    }
+}
