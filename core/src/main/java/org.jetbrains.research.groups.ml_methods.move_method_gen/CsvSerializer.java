@@ -9,7 +9,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.exceptions.InvalidClassException;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.exceptions.InvalidCsvInputException;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.exceptions.InvalidFileLocationException;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.exceptions.InvalidMethodException;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
@@ -27,7 +30,6 @@ import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getClassByLocation;
-import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getDirectoryWithRootPackageFor;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getMethodByLocation;
 
 public class CsvSerializer {
@@ -116,19 +118,27 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2), true);
+                            String filePath = record.get(2);
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, filePath, true);
                             if (!fileOptional.isPresent()) {
-                                // todo: throw
+                                throw new InvalidFileLocationException(filePath);
                             }
 
                             PsiJavaFile file = fileOptional.get();
                             String className = record.get(1);
-                            int classOffset = Integer.parseInt(record.get(3)); // todo: catch exception
+
+                            String classOffsetString = record.get(3);
+                            int classOffset;
+                            try {
+                                classOffset = Integer.parseInt(classOffsetString);
+                            } catch (NumberFormatException e) {
+                                throw new InvalidCsvInputException("Failed to parse class offset. Input: " + classOffsetString);
+                            }
 
                             Optional<PsiClass> classOptional = getClassByLocation(file, className, classOffset);
 
                             if (!classOptional.isPresent()) {
-                                throw new InvalidCsvInputException("Failed to find class '" + className + "' at " + getPathToContainingFile(file) + ":" + classOffset);
+                                throw new InvalidClassException(className, getPathToContainingFile(file).toString(), classOffset);
                             }
 
                             classes.add(classOptional.get());
@@ -140,22 +150,36 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(METHODS_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.parse(reader)) {
-                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, record.get(2), true);
+                            String filePath = record.get(2);
+                            Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, filePath, true);
                             if (!fileOptional.isPresent()) {
-                                // todo: throw
+                                throw new InvalidFileLocationException(filePath);
                             }
 
                             PsiJavaFile file = fileOptional.get();
                             String methodName = record.get(1);
-                            int methodOffset = Integer.parseInt(record.get(3)); // todo: catch exception
+
+                            String methodOffsetString = record.get(3);
+                            int methodOffset;
+                            try {
+                                methodOffset = Integer.parseInt(methodOffsetString);
+                            } catch (NumberFormatException e) {
+                                throw new InvalidCsvInputException("Failed to parse method offset. Input: " + methodOffsetString);
+                            }
 
                             Optional<PsiMethod> methodOptional = getMethodByLocation(file, methodName, methodOffset);
 
                             if (!methodOptional.isPresent()) {
-                                // todo: throw
+                                throw new InvalidMethodException(methodName, getPathToContainingFile(file).toString(), methodOffset);
                             }
 
-                            int idOfContainingClass = Integer.parseInt(record.get(4)); // todo: catch exception
+                            String idOfContainingClassString = record.get(4);
+                            int idOfContainingClass;
+                            try {
+                                idOfContainingClass = Integer.parseInt(idOfContainingClassString);
+                            } catch (NumberFormatException e) {
+                                throw new InvalidCsvInputException("Failed to parse if of containing class. Input: " + idOfContainingClassString);
+                            }
 
                             int[] idsOfPossibleTargets = Arrays.stream(record.get(5).split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
 

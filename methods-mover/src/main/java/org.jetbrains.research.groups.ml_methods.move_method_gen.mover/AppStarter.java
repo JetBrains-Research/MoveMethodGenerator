@@ -117,7 +117,7 @@ public class AppStarter extends ProjectAppStarter {
         moveMethodProcessor.run();
     }
 
-    // todo: qualifiers, setters, (make static ??)
+    // todo: qualifiers
     private void rewriteMethod(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
         PsiMethod psiMethod = method.getElement();
         if (psiMethod == null) {
