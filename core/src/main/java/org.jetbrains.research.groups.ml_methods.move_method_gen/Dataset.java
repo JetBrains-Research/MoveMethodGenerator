@@ -6,10 +6,7 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,12 +24,12 @@ public class Dataset {
         final @NotNull RelevantClasses relevantClasses,
         final @NotNull List<PsiMethod> relevantMethods
     ) {
-        List<PsiClass> psiClasses = Stream.concat(
+        Set<PsiClass> psiClasses = Stream.concat(
             relevantMethods.stream()
                 .flatMap(it -> relevantClasses.possibleTargets(it).stream()),
             relevantMethods.stream()
                 .map(PsiMember::getContainingClass)
-        ).collect(Collectors.toList());
+        ).collect(Collectors.toSet());
 
         classes = psiClasses.stream().map(
             it -> SmartPointerManager.getInstance(project)
