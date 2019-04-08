@@ -1,6 +1,20 @@
-2019-03-10 12:39:02,956 [INFO] Project /content/projects/jhotdraw is opened
-2019-03-10 12:39:41,882 [INFO] Total number of java files: 1394
-2019-03-10 12:39:41,883 [INFO] Total number of source java files: 1394
-2019-03-10 12:39:41,883 [INFO] Total number of classes: 1957
-2019-03-10 12:39:41,883 [INFO] Total number of methods: 14154
-2019-03-10 12:39:41,883 [INFO] Number of methods after filtration: 5
+2019-04-08 14:47:09,814 [INFO] Project /content/projects/jhotdraw is opened
+2019-04-08 14:48:14,030 [INFO] Total number of java files: 1394
+2019-04-08 14:48:14,030 [INFO] Total number of source java files: 1394
+2019-04-08 14:48:14,031 [INFO] Total number of classes: 1303
+2019-04-08 14:48:14,031 [INFO] Total number of methods: 13134
+2019-04-08 14:48:14,032 [INFO] StaticMethodsFilter filtered: 1247
+2019-04-08 14:48:14,032 [INFO] ConstructorsFilter filtered: 1557
+2019-04-08 14:48:14,032 [INFO] AbstractMethodsFilter filtered: 76
+2019-04-08 14:48:14,032 [INFO] GettersFilter filtered: 768
+2019-04-08 14:48:14,032 [INFO] SettersFilter filtered: 201
+2019-04-08 14:48:14,032 [INFO] EmptyMethodsFilter filtered: 753
+2019-04-08 14:48:14,032 [INFO] ExceptionsThrowersFilter filtered: 40
+2019-04-08 14:48:14,032 [INFO] SingleMethodFilter filtered: 173
+2019-04-08 14:48:14,032 [INFO] SimpleDelegationsFilter filtered: 1804
+2019-04-08 14:48:14,032 [INFO] PrivateMethodsCallersFilter filtered: 2170
+2019-04-08 14:48:14,032 [INFO] PrivateFieldAccessorsFilter filtered: 2557
+2019-04-08 14:48:14,032 [INFO] OverridingMethodsFilter filtered: 1126
+2019-04-08 14:48:14,032 [INFO] OverriddenMethodsFilter filtered: 37
+2019-04-08 14:48:14,032 [INFO] NoTargetsMethodsFilter filtered: 620
+2019-04-08 14:48:14,032 [INFO] Number of methods after filtration: 5

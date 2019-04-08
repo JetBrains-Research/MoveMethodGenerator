@@ -1,16 +1,16 @@
-0,org.apache.maven.project.artifact.MavenMetadataSource.hasMissingParentPom,maven-core/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java,28579,17,0
-1,org.apache.maven.project.ProjectSorter.addEdge,maven-core/src/main/java/org/apache/maven/project/ProjectSorter.java,8024,18,9
-2,org.apache.maven.project.DefaultProjectDependenciesResolver.process,maven-core/src/main/java/org/apache/maven/project/DefaultProjectDependenciesResolver.java,8683,19,2
-3,org.apache.maven.lifecycle.internal.LifecycleStarter.projectIsNotPresent,maven-core/src/main/java/org/apache/maven/lifecycle/internal/LifecycleStarter.java,5640,20,8
-4,org.apache.maven.lifecycle.internal.ReactorBuildStatus.isHaltedOrBlacklisted,maven-core/src/main/java/org/apache/maven/lifecycle/internal/ReactorBuildStatus.java,2403,21,9
-5,org.apache.maven.lifecycle.internal.DefaultLifecycleMappingDelegate.addMojoExecution,maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleMappingDelegate.java,6636,22,5
-6,org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.setupMojoExecutions,maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleExecutionPlanCalculator.java,6247,23,9 8
-7,org.apache.maven.toolchain.DefaultToolchainManager.retrieveContext,maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManager.java,3764,24,8
-8,org.apache.maven.ReactorReader.hasBeenPackaged,maven-core/src/main/java/org/apache/maven/ReactorReader.java,6357,25,9
-9,org.apache.maven.repository.metadata.MetadataGraph.findVertex,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataGraph.java,5261,27,12
-10,org.apache.maven.repository.metadata.MetadataGraph.getEdgesBetween,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataGraph.java,8346,27,11
-11,org.apache.maven.repository.metadata.ClasspathContainer.add,maven-compat/src/main/java/org/apache/maven/repository/metadata/ClasspathContainer.java,1994,28,12
-12,org.apache.maven.repository.metadata.MetadataResolutionResult.getClasspathTree,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataResolutionResult.java,5308,29,13
-13,org.apache.maven.cli.MavenCli.version,maven-embedder/src/main/java/org/apache/maven/cli/MavenCli.java,19513,31,15
-14,org.apache.maven.cli.MavenCli.repository,maven-embedder/src/main/java/org/apache/maven/cli/MavenCli.java,34557,31,15
-15,org.apache.maven.plugin.descriptor.PluginDescriptor.addMojo,maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptor.java,2895,32,16
+0,org.apache.maven.project.artifact.MavenMetadataSource.hasMissingParentPom,maven-core/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java,28579,19,1
+1,org.apache.maven.project.ProjectSorter.addEdge,maven-core/src/main/java/org/apache/maven/project/ProjectSorter.java,8024,0,17
+2,org.apache.maven.project.DefaultProjectDependenciesResolver.process,maven-core/src/main/java/org/apache/maven/project/DefaultProjectDependenciesResolver.java,8683,14,6
+3,org.apache.maven.lifecycle.internal.LifecycleStarter.projectIsNotPresent,maven-core/src/main/java/org/apache/maven/lifecycle/internal/LifecycleStarter.java,5640,8,9
+4,org.apache.maven.lifecycle.internal.ReactorBuildStatus.isHaltedOrBlacklisted,maven-core/src/main/java/org/apache/maven/lifecycle/internal/ReactorBuildStatus.java,2403,11,17
+5,org.apache.maven.lifecycle.internal.DefaultLifecycleMappingDelegate.addMojoExecution,maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleMappingDelegate.java,6636,10,20
+6,org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.setupMojoExecutions,maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleExecutionPlanCalculator.java,6247,13,9 17
+7,org.apache.maven.toolchain.DefaultToolchainManager.retrieveContext,maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManager.java,3764,15,9
+8,org.apache.maven.ReactorReader.hasBeenPackaged,maven-core/src/main/java/org/apache/maven/ReactorReader.java,6357,7,17
+9,org.apache.maven.repository.metadata.MetadataGraph.findVertex,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataGraph.java,5261,5,4
+10,org.apache.maven.repository.metadata.MetadataGraph.getEdgesBetween,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataGraph.java,8346,5,18
+11,org.apache.maven.repository.metadata.ClasspathContainer.add,maven-compat/src/main/java/org/apache/maven/repository/metadata/ClasspathContainer.java,1994,22,4
+12,org.apache.maven.repository.metadata.MetadataResolutionResult.getClasspathTree,maven-compat/src/main/java/org/apache/maven/repository/metadata/MetadataResolutionResult.java,5308,12,21
+13,org.apache.maven.cli.MavenCli.version,maven-embedder/src/main/java/org/apache/maven/cli/MavenCli.java,19513,3,2
+14,org.apache.maven.cli.MavenCli.repository,maven-embedder/src/main/java/org/apache/maven/cli/MavenCli.java,34557,3,2
+15,org.apache.maven.plugin.descriptor.PluginDescriptor.addMojo,maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptor.java,2895,23,16

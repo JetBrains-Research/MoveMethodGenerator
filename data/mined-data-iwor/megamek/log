@@ -1,6 +1,20 @@
-2019-03-10 12:45:19,683 [INFO] Project /content/projects/megamek is opened
-2019-03-10 12:47:16,783 [INFO] Total number of java files: 2014
-2019-03-10 12:47:16,783 [INFO] Total number of source java files: 2014
-2019-03-10 12:47:16,783 [INFO] Total number of classes: 1503
-2019-03-10 12:47:16,783 [INFO] Total number of methods: 16832
-2019-03-10 12:47:16,783 [INFO] Number of methods after filtration: 291
+2019-04-08 14:53:05,778 [INFO] Project /content/projects/megamek is opened
+2019-04-08 14:55:34,547 [INFO] Total number of java files: 2014
+2019-04-08 14:55:34,547 [INFO] Total number of source java files: 2014
+2019-04-08 14:55:34,547 [INFO] Total number of classes: 1187
+2019-04-08 14:55:34,547 [INFO] Total number of methods: 16357
+2019-04-08 14:55:34,548 [INFO] StaticMethodsFilter filtered: 2018
+2019-04-08 14:55:34,548 [INFO] ConstructorsFilter filtered: 1337
+2019-04-08 14:55:34,548 [INFO] AbstractMethodsFilter filtered: 106
+2019-04-08 14:55:34,548 [INFO] GettersFilter filtered: 1746
+2019-04-08 14:55:34,548 [INFO] SettersFilter filtered: 846
+2019-04-08 14:55:34,548 [INFO] EmptyMethodsFilter filtered: 772
+2019-04-08 14:55:34,548 [INFO] ExceptionsThrowersFilter filtered: 7
+2019-04-08 14:55:34,548 [INFO] SingleMethodFilter filtered: 306
+2019-04-08 14:55:34,548 [INFO] SimpleDelegationsFilter filtered: 1824
+2019-04-08 14:55:34,548 [INFO] PrivateMethodsCallersFilter filtered: 1944
+2019-04-08 14:55:34,548 [INFO] PrivateFieldAccessorsFilter filtered: 2661
+2019-04-08 14:55:34,548 [INFO] OverridingMethodsFilter filtered: 1277
+2019-04-08 14:55:34,549 [INFO] OverriddenMethodsFilter filtered: 132
+2019-04-08 14:55:34,549 [INFO] NoTargetsMethodsFilter filtered: 1091
+2019-04-08 14:55:34,549 [INFO] Number of methods after filtration: 290

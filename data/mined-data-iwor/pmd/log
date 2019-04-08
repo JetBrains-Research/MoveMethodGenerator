@@ -1,6 +1,20 @@
-2019-03-10 12:48:03,639 [INFO] Project /content/projects/pmd is opened
-2019-03-10 12:48:37,044 [INFO] Total number of java files: 2399
-2019-03-10 12:48:37,044 [INFO] Total number of source java files: 2317
-2019-03-10 12:48:37,045 [INFO] Total number of classes: 1511
-2019-03-10 12:48:37,045 [INFO] Total number of methods: 9879
-2019-03-10 12:48:37,045 [INFO] Number of methods after filtration: 135
+2019-04-08 14:56:27,046 [INFO] Project /content/projects/pmd is opened
+2019-04-08 14:57:08,560 [INFO] Total number of java files: 2357
+2019-04-08 14:57:08,560 [INFO] Total number of source java files: 2269
+2019-04-08 14:57:08,560 [INFO] Total number of classes: 1298
+2019-04-08 14:57:08,560 [INFO] Total number of methods: 9277
+2019-04-08 14:57:08,561 [INFO] StaticMethodsFilter filtered: 603
+2019-04-08 14:57:08,561 [INFO] ConstructorsFilter filtered: 1327
+2019-04-08 14:57:08,561 [INFO] AbstractMethodsFilter filtered: 79
+2019-04-08 14:57:08,561 [INFO] GettersFilter filtered: 596
+2019-04-08 14:57:08,561 [INFO] SettersFilter filtered: 258
+2019-04-08 14:57:08,561 [INFO] EmptyMethodsFilter filtered: 199
+2019-04-08 14:57:08,561 [INFO] ExceptionsThrowersFilter filtered: 82
+2019-04-08 14:57:08,561 [INFO] SingleMethodFilter filtered: 342
+2019-04-08 14:57:08,561 [INFO] SimpleDelegationsFilter filtered: 2318
+2019-04-08 14:57:08,561 [INFO] PrivateMethodsCallersFilter filtered: 1057
+2019-04-08 14:57:08,561 [INFO] PrivateFieldAccessorsFilter filtered: 1039
+2019-04-08 14:57:08,561 [INFO] OverridingMethodsFilter filtered: 596
+2019-04-08 14:57:08,561 [INFO] OverriddenMethodsFilter filtered: 12
+2019-04-08 14:57:08,561 [INFO] NoTargetsMethodsFilter filtered: 633
+2019-04-08 14:57:08,561 [INFO] Number of methods after filtration: 136

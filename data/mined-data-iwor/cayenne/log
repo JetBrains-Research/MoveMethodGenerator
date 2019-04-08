@@ -1,6 +1,20 @@
-2019-03-10 12:35:02,899 [INFO] Project /content/projects/cayenne is opened
-2019-03-10 12:36:33,442 [INFO] Total number of java files: 3902
-2019-03-10 12:36:33,443 [INFO] Total number of source java files: 3902
-2019-03-10 12:36:33,443 [INFO] Total number of classes: 2484
-2019-03-10 12:36:33,443 [INFO] Total number of methods: 17025
-2019-03-10 12:36:33,443 [INFO] Number of methods after filtration: 134
+2019-04-08 14:44:34,062 [INFO] Project /content/projects/cayenne is opened
+2019-04-08 14:46:17,116 [INFO] Total number of java files: 3903
+2019-04-08 14:46:17,116 [INFO] Total number of source java files: 3903
+2019-04-08 14:46:17,116 [INFO] Total number of classes: 2135
+2019-04-08 14:46:17,116 [INFO] Total number of methods: 16433
+2019-04-08 14:46:17,117 [INFO] StaticMethodsFilter filtered: 883
+2019-04-08 14:46:17,117 [INFO] ConstructorsFilter filtered: 2132
+2019-04-08 14:46:17,117 [INFO] AbstractMethodsFilter filtered: 158
+2019-04-08 14:46:17,117 [INFO] GettersFilter filtered: 1428
+2019-04-08 14:46:17,117 [INFO] SettersFilter filtered: 635
+2019-04-08 14:46:17,117 [INFO] EmptyMethodsFilter filtered: 704
+2019-04-08 14:46:17,117 [INFO] ExceptionsThrowersFilter filtered: 134
+2019-04-08 14:46:17,117 [INFO] SingleMethodFilter filtered: 426
+2019-04-08 14:46:17,117 [INFO] SimpleDelegationsFilter filtered: 2645
+2019-04-08 14:46:17,117 [INFO] PrivateMethodsCallersFilter filtered: 2608
+2019-04-08 14:46:17,117 [INFO] PrivateFieldAccessorsFilter filtered: 2823
+2019-04-08 14:46:17,117 [INFO] OverridingMethodsFilter filtered: 786
+2019-04-08 14:46:17,117 [INFO] OverriddenMethodsFilter filtered: 41
+2019-04-08 14:46:17,117 [INFO] NoTargetsMethodsFilter filtered: 896
+2019-04-08 14:46:17,118 [INFO] Number of methods after filtration: 134

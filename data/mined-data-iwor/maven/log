@@ -1,6 +1,20 @@
-2019-03-10 12:42:22,074 [INFO] Project /content/projects/maven is opened
-2019-03-10 12:42:36,361 [INFO] Total number of java files: 970
-2019-03-10 12:42:36,365 [INFO] Total number of source java files: 970
-2019-03-10 12:42:36,365 [INFO] Total number of classes: 509
-2019-03-10 12:42:36,365 [INFO] Total number of methods: 4381
-2019-03-10 12:42:36,365 [INFO] Number of methods after filtration: 16
+2019-04-08 14:49:59,458 [INFO] Project /content/projects/maven is opened
+2019-04-08 14:50:17,751 [INFO] Total number of java files: 970
+2019-04-08 14:50:17,751 [INFO] Total number of source java files: 970
+2019-04-08 14:50:17,751 [INFO] Total number of classes: 486
+2019-04-08 14:50:17,751 [INFO] Total number of methods: 4360
+2019-04-08 14:50:17,752 [INFO] StaticMethodsFilter filtered: 271
+2019-04-08 14:50:17,752 [INFO] ConstructorsFilter filtered: 520
+2019-04-08 14:50:17,752 [INFO] AbstractMethodsFilter filtered: 8
+2019-04-08 14:50:17,752 [INFO] GettersFilter filtered: 672
+2019-04-08 14:50:17,752 [INFO] SettersFilter filtered: 209
+2019-04-08 14:50:17,752 [INFO] EmptyMethodsFilter filtered: 167
+2019-04-08 14:50:17,752 [INFO] ExceptionsThrowersFilter filtered: 11
+2019-04-08 14:50:17,752 [INFO] SingleMethodFilter filtered: 54
+2019-04-08 14:50:17,752 [INFO] SimpleDelegationsFilter filtered: 563
+2019-04-08 14:50:17,752 [INFO] PrivateMethodsCallersFilter filtered: 504
+2019-04-08 14:50:17,752 [INFO] PrivateFieldAccessorsFilter filtered: 734
+2019-04-08 14:50:17,752 [INFO] OverridingMethodsFilter filtered: 151
+2019-04-08 14:50:17,752 [INFO] OverriddenMethodsFilter filtered: 4
+2019-04-08 14:50:17,752 [INFO] NoTargetsMethodsFilter filtered: 476
+2019-04-08 14:50:17,753 [INFO] Number of methods after filtration: 16

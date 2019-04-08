@@ -1,0 +1,20 @@
+2019-04-08 14:58:27,889 [INFO] Project /content/projects/spring-framework is opened
+2019-04-08 15:02:10,637 [INFO] Total number of java files: 7067
+2019-04-08 15:02:10,637 [INFO] Total number of source java files: 7066
+2019-04-08 15:02:10,637 [INFO] Total number of classes: 3568
+2019-04-08 15:02:10,637 [INFO] Total number of methods: 29467
+2019-04-08 15:02:10,638 [INFO] StaticMethodsFilter filtered: 2271
+2019-04-08 15:02:10,638 [INFO] ConstructorsFilter filtered: 3469
+2019-04-08 15:02:10,638 [INFO] AbstractMethodsFilter filtered: 401
+2019-04-08 15:02:10,638 [INFO] GettersFilter filtered: 2857
+2019-04-08 15:02:10,639 [INFO] SettersFilter filtered: 2031
+2019-04-08 15:02:10,639 [INFO] EmptyMethodsFilter filtered: 911
+2019-04-08 15:02:10,639 [INFO] ExceptionsThrowersFilter filtered: 257
+2019-04-08 15:02:10,639 [INFO] SingleMethodFilter filtered: 524
+2019-04-08 15:02:10,639 [INFO] SimpleDelegationsFilter filtered: 4319
+2019-04-08 15:02:10,639 [INFO] PrivateMethodsCallersFilter filtered: 4590
+2019-04-08 15:02:10,639 [INFO] PrivateFieldAccessorsFilter filtered: 4716
+2019-04-08 15:02:10,639 [INFO] OverridingMethodsFilter filtered: 1597
+2019-04-08 15:02:10,639 [INFO] OverriddenMethodsFilter filtered: 94
+2019-04-08 15:02:10,639 [INFO] NoTargetsMethodsFilter filtered: 1230
+2019-04-08 15:02:10,639 [INFO] Number of methods after filtration: 200

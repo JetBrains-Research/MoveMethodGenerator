@@ -1,6 +1,20 @@
-2019-03-10 12:41:30,261 [INFO] Project /content/projects/junit5 is opened
-2019-03-10 12:41:47,894 [INFO] Total number of java files: 1000
-2019-03-10 12:41:47,894 [INFO] Total number of source java files: 991
-2019-03-10 12:41:47,894 [INFO] Total number of classes: 367
-2019-03-10 12:41:47,894 [INFO] Total number of methods: 2824
-2019-03-10 12:41:47,894 [INFO] Number of methods after filtration: 21
+2019-04-08 14:48:51,116 [INFO] Project /content/projects/junit5 is opened
+2019-04-08 14:49:11,108 [INFO] Total number of java files: 1005
+2019-04-08 14:49:11,108 [INFO] Total number of source java files: 996
+2019-04-08 14:49:11,108 [INFO] Total number of classes: 350
+2019-04-08 14:49:11,108 [INFO] Total number of methods: 2800
+2019-04-08 14:49:11,108 [INFO] StaticMethodsFilter filtered: 1027
+2019-04-08 14:49:11,109 [INFO] ConstructorsFilter filtered: 284
+2019-04-08 14:49:11,109 [INFO] AbstractMethodsFilter filtered: 14
+2019-04-08 14:49:11,109 [INFO] GettersFilter filtered: 186
+2019-04-08 14:49:11,109 [INFO] SettersFilter filtered: 35
+2019-04-08 14:49:11,109 [INFO] EmptyMethodsFilter filtered: 15
+2019-04-08 14:49:11,109 [INFO] ExceptionsThrowersFilter filtered: 2
+2019-04-08 14:49:11,109 [INFO] SingleMethodFilter filtered: 51
+2019-04-08 14:49:11,109 [INFO] SimpleDelegationsFilter filtered: 403
+2019-04-08 14:49:11,109 [INFO] PrivateMethodsCallersFilter filtered: 349
+2019-04-08 14:49:11,109 [INFO] PrivateFieldAccessorsFilter filtered: 224
+2019-04-08 14:49:11,109 [INFO] OverridingMethodsFilter filtered: 95
+2019-04-08 14:49:11,109 [INFO] OverriddenMethodsFilter filtered: 4
+2019-04-08 14:49:11,109 [INFO] NoTargetsMethodsFilter filtered: 90
+2019-04-08 14:49:11,109 [INFO] Number of methods after filtration: 21
