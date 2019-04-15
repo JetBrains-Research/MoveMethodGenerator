@@ -1,9 +1,9 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.mover;
 
-import com.google.common.collect.Lists;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Ref;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.PsiElementFactoryImpl;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodHandler;
@@ -51,6 +51,8 @@ public class AppStarter extends ProjectAppStarter {
     protected void run(@NotNull Project project) throws Exception {
         Dataset dataset = CsvSerializer.getInstance().deserialize(project, csvFilesDir);
 
+        MovedMethodList movedMethods = new MovedMethodList();
+
         for (Dataset.Method method : dataset.getMethods()) {
             WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
@@ -60,19 +62,24 @@ public class AppStarter extends ProjectAppStarter {
                 }
             });
 
+            SmartPsiElementPointer<PsiClass> originalClass =
+                SmartPointerManager.getInstance(project).createSmartPsiElementPointer(method.getPsiMethod().getElement().getContainingClass());
             DumbService.getInstance(project).runWhenSmart(
                 () -> {
                     try {
-                        moveMethod(project, method.getPsiMethod(), dataset.getClasses().get(method.getIdsOfPossibleTargets()[0]));
+                        SmartPsiElementPointer<PsiClass> targetClass = dataset.getClasses().get(method.getIdsOfPossibleTargets()[0]);
+                        movedMethods.addMethod(moveMethod(project, method.getPsiMethod(), targetClass), originalClass);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
             );
         }
+
+        MovedMethodSerializer.getInstance().serialize(movedMethods, csvFilesDir);
     }
 
-    private void moveMethod(
+    private @NotNull SmartPsiElementPointer<PsiMethod> moveMethod(
         final @NotNull Project project,
         final @NotNull SmartPsiElementPointer<PsiMethod> method,
         final @NotNull SmartPsiElementPointer<PsiClass> target
@@ -115,6 +122,24 @@ public class AppStarter extends ProjectAppStarter {
             );
 
         moveMethodProcessor.run();
+
+        List<PsiMethod> candidates = new ArrayList<>();
+        new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethod(final @NotNull PsiMethod aMethod) {
+                super.visitMethod(aMethod);
+
+                if (aMethod.getName().equals(psiMethod.getName())) {
+                    candidates.add(aMethod);
+                }
+            }
+        }.visitElement(targetClass);
+
+        if (candidates.size() != 1) {
+            throw new IllegalStateException("Failed to find moved method: " + psiMethod.getName());
+        }
+
+        return SmartPointerManager.getInstance(project).createSmartPsiElementPointer(candidates.get(0));
     }
 
     // todo: qualifiers

@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getClassByLocation;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getMethodByLocation;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getPathToContainingFile;
 
 public class CsvSerializer {
     private static final @NotNull CsvSerializer INSTANCE = new CsvSerializer();
@@ -201,11 +202,5 @@ public class CsvSerializer {
         }
 
         return dataset;
-    }
-
-    private @NotNull Path getPathToContainingFile(final @NotNull PsiElement element) {
-        return Paths.get(element.getProject().getBasePath()).toAbsolutePath().normalize().relativize(
-            Paths.get(element.getContainingFile().getVirtualFile().getCanonicalPath()).toAbsolutePath().normalize()
-        );
     }
 }

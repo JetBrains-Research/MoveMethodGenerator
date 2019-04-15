@@ -9,6 +9,8 @@ import com.intellij.psi.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class JavaFileUtils {
@@ -113,5 +115,11 @@ public class JavaFileUtils {
         }.visitElement(file);
 
         return Optional.ofNullable(resultRef.get());
+    }
+
+    public static @NotNull Path getPathToContainingFile(final @NotNull PsiElement element) {
+        return Paths.get(element.getProject().getBasePath()).toAbsolutePath().normalize().relativize(
+                Paths.get(element.getContainingFile().getVirtualFile().getCanonicalPath()).toAbsolutePath().normalize()
+        );
     }
 }
