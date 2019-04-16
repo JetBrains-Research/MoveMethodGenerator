@@ -18,6 +18,7 @@ import org.jetbrains.research.groups.ml_methods.move_method_gen.Dataset;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.ProjectAppStarter;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -44,13 +45,12 @@ public class AppStarter extends ProjectAppStarter {
         }
 
         csvFilesDir = Paths.get(args[2]);
-
-        log.addAppender(new ConsoleAppender(new PatternLayout("%d [%p] %m%n")));
     }
 
     @Override
     protected void run(@NotNull Project project) throws Exception {
         Dataset dataset = CsvSerializer.getInstance().deserialize(project, csvFilesDir);
+        int potentialMoves = dataset.getMethods().stream().mapToInt(it -> it.getIdsOfPossibleTargets().length).sum();
 
         List<SmartPsiElementPointer<PsiClass>> classes = dataset.getClasses();
         List<Dataset.Method> methods = dataset.getMethods();
@@ -89,13 +89,18 @@ public class AppStarter extends ProjectAppStarter {
         MovedMethodList movedMethods = new MovedMethodList();
 
         for (MethodToMove methodToMove : methodsToMove) {
+            Ref<Exception> exceptionRef = new Ref<>(null);
             WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
                     rewriteMethod(methods.get(methodToMove.getMethodId()).getPsiMethod());
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    exceptionRef.set(e);
                 }
             });
+
+            if (!exceptionRef.isNull()) {
+                throw exceptionRef.get();
+            }
 
             DumbService.getInstance(project).runWhenSmart(
                 () -> {
@@ -106,13 +111,25 @@ public class AppStarter extends ProjectAppStarter {
                         SmartPsiElementPointer<PsiMethod> psiMethod = methods.get(methodToMove.getMethodId()).getPsiMethod();
                         movedMethods.addMethod(moveMethod(project, psiMethod, targetClass), methodId, methods.get(methodId).getIdOfContainingClass(), targetClassId);
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        exceptionRef.set(e);
                     }
                 }
             );
+
+            if (!exceptionRef.isNull()) {
+                throw exceptionRef.get();
+            }
         }
 
         MovedMethodSerializer.getInstance().serialize(movedMethods, csvFilesDir);
+
+        log.info(potentialMoves + " potential moves found");
+        log.info(movedMethods.getList().size() + " moves performed");
+    }
+
+    @Override
+    protected @NotNull Path getOutputDir() {
+        return csvFilesDir;
     }
 
     private @NotNull SmartPsiElementPointer<PsiMethod> moveMethod(
@@ -129,8 +146,6 @@ public class AppStarter extends ProjectAppStarter {
         if (targetClass == null) {
             throw new IllegalStateException("Failed to restore class from Smart Pointer: " + target);
         }
-
-        System.out.println("Moving " + psiMethod.getName() + " to " + targetClass.getQualifiedName());
 
         List<PsiVariable> possibleTargetVariables =
             Arrays.stream(psiMethod.getParameterList().getParameters())

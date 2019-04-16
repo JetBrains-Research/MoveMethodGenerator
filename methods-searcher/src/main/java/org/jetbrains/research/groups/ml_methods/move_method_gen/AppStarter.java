@@ -32,14 +32,6 @@ public class AppStarter extends ProjectAppStarter {
 
         Path tmp = Paths.get(projectFolderPath);
         outputDir = Paths.get(args[2]).resolve(tmp.getName(tmp.getNameCount() - 1));
-
-        String logFileName = outputDir.resolve("log").toString();
-
-        try {
-            log.addAppender(new FileAppender(new PatternLayout("%d [%p] %m%n"), logFileName));
-        } catch (IOException e) {
-            System.err.println("Failed to open log file: " + logFileName);
-        }
     }
 
     @Override
@@ -80,5 +72,9 @@ public class AppStarter extends ProjectAppStarter {
         if (!exceptionRef.isNull()) {
             throw exceptionRef.get();
         }
+    }
+
+    protected @NotNull Path getOutputDir() {
+        return outputDir;
     }
 }

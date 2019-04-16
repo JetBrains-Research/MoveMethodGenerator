@@ -7,11 +7,15 @@ import com.intellij.openapi.application.ApplicationStarter;
 import com.intellij.openapi.application.ex.ApplicationEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.exceptions.UnsupportedDirectoriesLayoutException;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.PreprocessingUtils.addAllPossibleSourceRoots;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.PreprocessingUtils.addMainModuleIfLost;
@@ -34,6 +38,14 @@ public abstract class ProjectAppStarter implements ApplicationStarter {
 
     @Override
     public void main(String[] args) {
+        String logFileName = getOutputDir().resolve("log").toString();
+
+        try {
+            log.addAppender(new FileAppender(new PatternLayout("%d [%p] %m%n"), logFileName));
+        } catch (IOException e) {
+            System.err.println("Failed to open log file: " + logFileName);
+        }
+
         ApplicationEx application = (ApplicationEx) ApplicationManager.getApplication();
 
         try {
@@ -87,4 +99,6 @@ public abstract class ProjectAppStarter implements ApplicationStarter {
     }
 
     protected abstract void run(final @NotNull Project project) throws Exception;
+
+    protected abstract @NotNull Path getOutputDir();
 }
