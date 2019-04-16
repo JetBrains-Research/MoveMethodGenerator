@@ -53,6 +53,7 @@ public class AppStarter extends ProjectAppStarter {
 
         MovedMethodList movedMethods = new MovedMethodList();
 
+        int methodId = 0;
         for (Dataset.Method method : dataset.getMethods()) {
             WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
@@ -62,18 +63,20 @@ public class AppStarter extends ProjectAppStarter {
                 }
             });
 
-            SmartPsiElementPointer<PsiClass> originalClass =
-                SmartPointerManager.getInstance(project).createSmartPsiElementPointer(method.getPsiMethod().getElement().getContainingClass());
+            final int capturedMethodId = methodId;
             DumbService.getInstance(project).runWhenSmart(
                 () -> {
                     try {
-                        SmartPsiElementPointer<PsiClass> targetClass = dataset.getClasses().get(method.getIdsOfPossibleTargets()[0]);
-                        movedMethods.addMethod(moveMethod(project, method.getPsiMethod(), targetClass), originalClass);
+                        int targetClassId = method.getIdsOfPossibleTargets()[0];
+                        SmartPsiElementPointer<PsiClass> targetClass = dataset.getClasses().get(targetClassId);
+                        movedMethods.addMethod(moveMethod(project, method.getPsiMethod(), targetClass), capturedMethodId, method.getIdOfContainingClass(), targetClassId);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
             );
+
+            ++methodId;
         }
 
         MovedMethodSerializer.getInstance().serialize(movedMethods, csvFilesDir);

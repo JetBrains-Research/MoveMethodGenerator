@@ -1,6 +1,5 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.mover;
 
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.SmartPsiElementPointer;
 import org.jetbrains.annotations.NotNull;
@@ -14,9 +13,11 @@ public class MovedMethodList {
 
     public synchronized void addMethod(
         final @NotNull SmartPsiElementPointer<PsiMethod> method,
-        final @NotNull SmartPsiElementPointer<PsiClass> originalClass
+        final int methodId,
+        final int originalClassId,
+        final int targetClassId
     ) {
-        list.add(new Method(method, originalClass));
+        list.add(new Method(method, methodId, originalClassId, targetClassId));
     }
 
     public @NotNull List<Method> getList() {
@@ -26,22 +27,38 @@ public class MovedMethodList {
     public class Method {
         private final @NotNull SmartPsiElementPointer<PsiMethod> method;
 
-        private final @NotNull SmartPsiElementPointer<PsiClass> originalClass;
+        private final int methodId;
+
+        private final int originalClassId;
+
+        private final int targetClassId;
 
         private Method(
             final @NotNull SmartPsiElementPointer<PsiMethod> method,
-            final @NotNull SmartPsiElementPointer<PsiClass> originalClass
+            final int methodId,
+            final int originalClassId,
+            final int targetClassId
         ) {
             this.method = method;
-            this.originalClass = originalClass;
+            this.methodId = methodId;
+            this.originalClassId = originalClassId;
+            this.targetClassId = targetClassId;
         }
 
         public @NotNull SmartPsiElementPointer<PsiMethod> getMethod() {
             return method;
         }
 
-        public @NotNull SmartPsiElementPointer<PsiClass> getOriginalClass() {
-            return originalClass;
+        public int getMethodId() {
+            return methodId;
+        }
+
+        public int getOriginalClassId() {
+            return originalClassId;
+        }
+
+        public int getTargetClassId() {
+            return targetClassId;
         }
     }
 }

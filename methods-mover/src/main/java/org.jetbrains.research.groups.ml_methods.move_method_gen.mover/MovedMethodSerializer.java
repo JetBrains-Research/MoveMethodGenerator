@@ -27,6 +27,8 @@ public class MovedMethodSerializer {
 
     private static final @NotNull String FILE_NAME = "moved-methods.csv";
 
+    private static final @NotNull CSVFormat FILE_FORMAT = CSVFormat.RFC4180.withHeader("id", "name", "file", "offset", "original_class_id", "target_class_id");
+
     private MovedMethodSerializer() {
     }
 
@@ -43,19 +45,18 @@ public class MovedMethodSerializer {
             () -> {
                 try (
                     BufferedWriter writer = Files.newBufferedWriter(targetDir.resolve(FILE_NAME), CREATE_NEW);
-                    CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.RFC4180)
+                    CSVPrinter csvPrinter = new CSVPrinter(writer, FILE_FORMAT)
                 ) {
                     for (MovedMethodList.Method method : list.getList()) {
                         PsiMethod psiMethod = method.getMethod().getElement();
-                        PsiClass originalClass = method.getOriginalClass().getElement();
 
                         csvPrinter.printRecord(
+                            method.getMethodId(),
                             MethodUtils.fullyQualifiedName(psiMethod),
                             getPathToContainingFile(psiMethod),
                             psiMethod.getNode().getStartOffset(),
-                            originalClass.getQualifiedName(),
-                            getPathToContainingFile(originalClass),
-                            originalClass.getNode().getStartOffset()
+                            method.getOriginalClassId(),
+                            method.getTargetClassId()
                         );
                     }
                 } catch (IOException exception) {
