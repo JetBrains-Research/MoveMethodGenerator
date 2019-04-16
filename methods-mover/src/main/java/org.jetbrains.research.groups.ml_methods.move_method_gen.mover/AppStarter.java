@@ -1,5 +1,6 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen.mover;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
@@ -51,32 +52,64 @@ public class AppStarter extends ProjectAppStarter {
     protected void run(@NotNull Project project) throws Exception {
         Dataset dataset = CsvSerializer.getInstance().deserialize(project, csvFilesDir);
 
+        List<SmartPsiElementPointer<PsiClass>> classes = dataset.getClasses();
+        List<Dataset.Method> methods = dataset.getMethods();
+
+        List<MethodToMove> methodsToMove = new ArrayList<>();
+        ApplicationManager.getApplication().runReadAction(() -> {
+            Set<PsiClass> usedClasses = new HashSet<>();
+
+            int methodId = 0;
+            for (Dataset.Method method : dataset.getMethods()) {
+                PsiMethod psiMethod = method.getPsiMethod().getElement();
+                if (usedClasses.contains(psiMethod.getContainingClass())) {
+                    ++methodId;
+                    continue;
+                }
+
+                int targetId = -1;
+                for (int possibleTargetId : method.getIdsOfPossibleTargets()) {
+                    PsiClass targetClass = classes.get(possibleTargetId).getElement();
+                    if (!usedClasses.contains(targetClass)) {
+                        targetId = possibleTargetId;
+                        break;
+                    }
+                }
+
+                if (targetId != -1) {
+                    usedClasses.add(psiMethod.getContainingClass());
+                    usedClasses.add(classes.get(targetId).getElement());
+                    methodsToMove.add(new MethodToMove(methodId, targetId));
+                }
+
+                ++methodId;
+            }
+        });
+
         MovedMethodList movedMethods = new MovedMethodList();
 
-        int methodId = 0;
-        for (Dataset.Method method : dataset.getMethods()) {
+        for (MethodToMove methodToMove : methodsToMove) {
             WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
-                    rewriteMethod(method.getPsiMethod());
+                    rewriteMethod(methods.get(methodToMove.getMethodId()).getPsiMethod());
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             });
 
-            final int capturedMethodId = methodId;
             DumbService.getInstance(project).runWhenSmart(
                 () -> {
                     try {
-                        int targetClassId = method.getIdsOfPossibleTargets()[0];
-                        SmartPsiElementPointer<PsiClass> targetClass = dataset.getClasses().get(targetClassId);
-                        movedMethods.addMethod(moveMethod(project, method.getPsiMethod(), targetClass), capturedMethodId, method.getIdOfContainingClass(), targetClassId);
+                        int methodId = methodToMove.getMethodId();
+                        int targetClassId = methodToMove.getTargetClassId();
+                        SmartPsiElementPointer<PsiClass> targetClass = classes.get(targetClassId);
+                        SmartPsiElementPointer<PsiMethod> psiMethod = methods.get(methodToMove.getMethodId()).getPsiMethod();
+                        movedMethods.addMethod(moveMethod(project, psiMethod, targetClass), methodId, methods.get(methodId).getIdOfContainingClass(), targetClassId);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
             );
-
-            ++methodId;
         }
 
         MovedMethodSerializer.getInstance().serialize(movedMethods, csvFilesDir);
