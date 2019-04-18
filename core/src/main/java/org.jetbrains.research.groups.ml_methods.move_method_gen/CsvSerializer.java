@@ -202,7 +202,12 @@ public class CsvSerializer {
                                 throw new InvalidCsvInputException("Failed to parse if of containing class. Input: " + idOfContainingClassString);
                             }
 
-                            int[] idsOfPossibleTargets = Arrays.stream(record.get(TARGET_IDS).split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
+                            String targetIdsString = record.get(TARGET_IDS);
+                            int[] idsOfPossibleTargets = {};
+
+                            if (!targetIdsString.isEmpty()) {
+                                idsOfPossibleTargets = Arrays.stream(targetIdsString.split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
+                            }
 
                             methods.add(new Dataset.Method(project, methodOptional.get(), idOfContainingClass, idsOfPossibleTargets));
                         }
