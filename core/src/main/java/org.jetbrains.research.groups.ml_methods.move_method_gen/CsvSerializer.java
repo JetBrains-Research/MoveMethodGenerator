@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.CsvSerializer.Headers.*;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getClassByLocation;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getMethodByLocation;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.JavaFileUtils.getPathToContainingFile;
@@ -40,9 +41,24 @@ public class CsvSerializer {
 
     private static final @NotNull String CLASSES_FILE_NAME = "classes.csv";
 
-    private static final @NotNull CSVFormat CLASSES_FILE_FORMAT = CSVFormat.RFC4180.withHeader("id", "name", "file", "offset");
+    private static final @NotNull CSVFormat CLASSES_FILE_FORMAT = CSVFormat.RFC4180.withHeader(ID.toString(), NAME.toString(), FILE.toString(), OFFSET.toString());
 
-    private static final @NotNull CSVFormat METHODS_FILE_FORMAT = CSVFormat.RFC4180.withHeader("id", "name", "file", "offset", "containing_class_id", "target_ids");
+    private static final @NotNull CSVFormat METHODS_FILE_FORMAT = CSVFormat.RFC4180.withHeader(ID.toString(), NAME.toString(), FILE.toString(), OFFSET.toString(), CONTAINING_CLASS_ID.toString(), TARGET_IDS.toString());
+
+    public enum Headers {
+        ID("id"), NAME("name"), FILE("file"), OFFSET("offset"), CONTAINING_CLASS_ID("containing_class_id"), TARGET_IDS("target_ids");
+
+        private final @NotNull String stringRepresentation;
+
+        Headers(final @NotNull String stringRepresentation) {
+            this.stringRepresentation = stringRepresentation;
+        }
+
+        @Override
+        public @NotNull String toString() {
+            return stringRepresentation;
+        }
+    }
 
     private CsvSerializer() {
     }
@@ -123,16 +139,16 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(CLASSES_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.withHeader().parse(reader)) {
-                            String filePath = record.get("file");
+                            String filePath = record.get(FILE);
                             Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, filePath, true);
                             if (!fileOptional.isPresent()) {
                                 throw new InvalidFileLocationException(filePath);
                             }
 
                             PsiJavaFile file = fileOptional.get();
-                            String className = record.get("name");
+                            String className = record.get(NAME);
 
-                            String classOffsetString = record.get("offset");
+                            String classOffsetString = record.get(OFFSET);
                             int classOffset;
                             try {
                                 classOffset = Integer.parseInt(classOffsetString);
@@ -155,16 +171,16 @@ public class CsvSerializer {
                         BufferedReader reader = Files.newBufferedReader(dir.resolve(METHODS_FILE_NAME));
                     ) {
                         for (CSVRecord record : CSVFormat.RFC4180.withHeader().parse(reader)) {
-                            String filePath = record.get("file");
+                            String filePath = record.get(FILE);
                             Optional<PsiJavaFile> fileOptional = JavaFileUtils.getFileByPath(project, filePath, true);
                             if (!fileOptional.isPresent()) {
                                 throw new InvalidFileLocationException(filePath);
                             }
 
                             PsiJavaFile file = fileOptional.get();
-                            String methodName = record.get("name");
+                            String methodName = record.get(NAME);
 
-                            String methodOffsetString = record.get("offset");
+                            String methodOffsetString = record.get(OFFSET);
                             int methodOffset;
                             try {
                                 methodOffset = Integer.parseInt(methodOffsetString);
@@ -178,7 +194,7 @@ public class CsvSerializer {
                                 throw new InvalidMethodException(methodName, getPathToContainingFile(file).toString(), methodOffset);
                             }
 
-                            String idOfContainingClassString = record.get("containing_class_id");
+                            String idOfContainingClassString = record.get(CONTAINING_CLASS_ID);
                             int idOfContainingClass;
                             try {
                                 idOfContainingClass = Integer.parseInt(idOfContainingClassString);
@@ -186,7 +202,7 @@ public class CsvSerializer {
                                 throw new InvalidCsvInputException("Failed to parse if of containing class. Input: " + idOfContainingClassString);
                             }
 
-                            int[] idsOfPossibleTargets = Arrays.stream(record.get("target_ids").split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
+                            int[] idsOfPossibleTargets = Arrays.stream(record.get(TARGET_IDS).split(" ")).map(Integer::parseInt).mapToInt(it -> it).toArray();
 
                             methods.add(new Dataset.Method(project, methodOptional.get(), idOfContainingClass, idsOfPossibleTargets));
                         }
