@@ -9,6 +9,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.PsiElementFactoryImpl;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodHandler;
 import com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodProcessor;
+import com.intellij.refactoring.rename.RenameProcessor;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.PatternLayout;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.jetbrains.research.groups.ml_methods.move_method_gen.ClassUtils.hasMethodWithName;
 import static org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils.fullyQualifiedName;
 
 public class AppStarter extends ProjectAppStarter {
@@ -132,6 +134,15 @@ public class AppStarter extends ProjectAppStarter {
         return csvFilesDir;
     }
 
+    private void renameMethod(
+        final @NotNull Project project,
+        final @NotNull PsiMethod method,
+        final @NotNull String newName
+    ) {
+        RenameProcessor renameProcessor = new RenameProcessor(project, method, newName, false, false);
+        renameProcessor.run();
+    }
+
     private @NotNull SmartPsiElementPointer<PsiMethod> moveMethod(
         final @NotNull Project project,
         final @NotNull SmartPsiElementPointer<PsiMethod> method,
@@ -145,6 +156,15 @@ public class AppStarter extends ProjectAppStarter {
         PsiClass targetClass = target.getElement();
         if (targetClass == null) {
             throw new IllegalStateException("Failed to restore class from Smart Pointer: " + target);
+        }
+
+        if (hasMethodWithName(targetClass, psiMethod.getName())) {
+            String newName = psiMethod.getName();
+            while (hasMethodWithName(targetClass, newName)) {
+                newName += "Other";
+            }
+
+            renameMethod(project, psiMethod, newName);
         }
 
         List<PsiVariable> possibleTargetVariables =
