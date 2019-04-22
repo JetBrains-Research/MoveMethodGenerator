@@ -187,7 +187,7 @@ public class AppStarter extends ProjectAppStarter {
         }.visitElement(targetClass);
 
         if (candidates.size() != 1) {
-            throw new IllegalStateException("Failed to find moved method: " + psiMethod.getName());
+            throw new IllegalStateException("Failed to find moved method: " + psiMethod.getName() + "; Method was moved to " + targetClass.getQualifiedName());
         }
 
         return SmartPointerManager.getInstance(project).createSmartPsiElementPointer(candidates.get(0));
