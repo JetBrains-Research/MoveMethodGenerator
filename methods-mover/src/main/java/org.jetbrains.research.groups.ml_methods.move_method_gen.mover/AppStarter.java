@@ -197,6 +197,10 @@ public class AppStarter extends ProjectAppStarter {
         PsiVariable targetVariable = possibleTargetVariables.get(0);
         Map<PsiClass, String> parameterNames = MoveInstanceMethodHandler.suggestParameterNames(psiMethod, targetVariable);
 
+        String suggestedName = parameterNames.get(psiMethod.getContainingClass());
+        parameterNames = new HashMap<>();
+        parameterNames.put(psiMethod.getContainingClass(), suggestedName);
+
         MoveInstanceMethodProcessor moveMethodProcessor =
             new MoveInstanceMethodProcessor(
                 project,

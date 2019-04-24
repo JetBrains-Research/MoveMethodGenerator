@@ -21,6 +21,7 @@ public class MethodRewriter {
 
     public void rewriteMethod(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
         encapsulateField(method);
+        specifyThisMethods(method);
         addGetClassStatement(method);
     }
 
@@ -108,13 +109,13 @@ public class MethodRewriter {
         psiMethod.getBody().getStatements()[0].delete();
     }
 
-    private void determineMethods(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
+    private void specifyThisMethods(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
         PsiMethod psiMethod = method.getElement();
         if (psiMethod == null) {
             throw new IllegalStateException("Failed to restore method from Smart Pointer: " + method);
         }
 
-        Set<String> classMethods = Arrays.stream(psiMethod.getContainingClass().getAllMethods()).map(PsiMethod::getName).collect(Collectors.toSet());
+        Set<PsiMethod> classMethods = Arrays.stream(psiMethod.getContainingClass().getAllMethods()).collect(Collectors.toSet());
         List<PsiReferenceExpression> methodCalls = new ArrayList<>();
         new JavaRecursiveElementVisitor() {
             @Override
@@ -123,10 +124,11 @@ public class MethodRewriter {
             ) {
                 super.visitMethodCallExpression(expression);
 
+                PsiMethod method = expression.resolveMethod();
                 if (
-                    expression.resolveMethod() == null &&
+                     method != null &&
                     !expression.getMethodExpression().isQualified() &&
-                    classMethods.contains(expression.getMethodExpression().getReferenceName())
+                    classMethods.contains(method)
                 ) {
                     methodCalls.add(expression.getMethodExpression());
                 }
