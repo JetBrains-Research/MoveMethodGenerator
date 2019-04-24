@@ -1,11 +1,19 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
+import com.intellij.ide.impl.NewProjectUtil;
 import com.intellij.ide.impl.PatchProjectUtil;
 import com.intellij.ide.impl.ProjectUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ApplicationStarter;
 import com.intellij.openapi.application.ex.ApplicationEx;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.projectRoots.JavaSdk;
+import com.intellij.openapi.projectRoots.ProjectJdkTable;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.roots.ModuleRootModificationUtil;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
@@ -86,6 +94,16 @@ public abstract class ProjectAppStarter implements ApplicationStarter {
                     throw new RuntimeException(e);
                 }
             });
+
+            Sdk jdk = JavaSdk.getInstance().createJdk("java 1.8", System.getenv("JAVA_HOME"), false);
+            ProjectJdkTable.getInstance().addJdk(jdk);
+            ProjectRootManager.getInstance(project).setProjectSdk(jdk);
+            NewProjectUtil.applyJdkToProject(project, jdk);
+
+            Module[] modules = ModuleManager.getInstance(project).getModules();
+            for (Module module : modules) {
+                ModuleRootModificationUtil.setModuleSdk(module, jdk);
+            }
 
             run(project);
         } catch (Throwable e) {
