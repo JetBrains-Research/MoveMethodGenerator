@@ -94,7 +94,7 @@ public class AppStarter extends ProjectAppStarter {
             Ref<Exception> exceptionRef = new Ref<>(null);
             WriteCommandAction.runWriteCommandAction(project, () -> {
                 try {
-                    rewriteMethod(methods.get(methodToMove.getMethodId()).getPsiMethod());
+                    MethodRewriter.getInstance().rewriteMethod(methods.get(methodToMove.getMethodId()).getPsiMethod());
                 } catch (Exception e) {
                     exceptionRef.set(e);
                 }
@@ -111,12 +111,26 @@ public class AppStarter extends ProjectAppStarter {
                         int targetClassId = methodToMove.getTargetClassId();
                         SmartPsiElementPointer<PsiClass> targetClass = classes.get(targetClassId);
                         SmartPsiElementPointer<PsiMethod> psiMethod = methods.get(methodToMove.getMethodId()).getPsiMethod();
-                        movedMethods.addMethod(moveMethod(project, psiMethod, targetClass), methodId, methods.get(methodId).getIdOfContainingClass(), targetClassId);
+
+                        SmartPsiElementPointer<PsiMethod> movedMethod = moveMethod(project, psiMethod, targetClass);
+                        movedMethods.addMethod(movedMethod, methodId, methods.get(methodId).getIdOfContainingClass(), targetClassId);
                     } catch (Exception e) {
                         exceptionRef.set(e);
                     }
                 }
             );
+
+            if (!exceptionRef.isNull()) {
+                throw exceptionRef.get();
+            }
+
+            WriteCommandAction.runWriteCommandAction(project, () -> {
+                try {
+                    MethodRewriter.getInstance().postRewriteMethod(movedMethods.getList().get(movedMethods.getList().size() - 1).getMethod());
+                } catch (Exception e) {
+                    exceptionRef.set(e);
+                }
+            });
 
             if (!exceptionRef.isNull()) {
                 throw exceptionRef.get();
@@ -211,63 +225,5 @@ public class AppStarter extends ProjectAppStarter {
         }
 
         return SmartPointerManager.getInstance(project).createSmartPsiElementPointer(candidates.get(0));
-    }
-
-    // todo: qualifiers
-    private void rewriteMethod(final @NotNull SmartPsiElementPointer<PsiMethod> method) {
-        PsiMethod psiMethod = method.getElement();
-        if (psiMethod == null) {
-            throw new IllegalStateException("Failed to restore method from Smart Pointer: " + method);
-        }
-
-        AccessorsMap accessorsMap = new AccessorsMap(
-            Arrays.stream(psiMethod.getContainingClass().getAllMethods()).collect(Collectors.toList())
-        );
-
-        List<PsiReferenceExpression> allReferenceExpressions = new ArrayList<>();
-
-        new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitReferenceExpression(
-                final @NotNull PsiReferenceExpression expression
-            ) {
-                super.visitReferenceExpression(expression);
-                allReferenceExpressions.add(expression);
-            }
-        }.visitElement(psiMethod);
-
-        // this way the order is from leaves to AST root
-        Collections.reverse(allReferenceExpressions);
-
-        for (PsiReferenceExpression expression : allReferenceExpressions) {
-            Optional<PsiField> optional = MethodUtils.referencedNonPublicField(expression);
-            if (!optional.isPresent()) {
-                continue;
-            }
-
-            PsiField field = optional.get();
-
-            if (MethodUtils.isInLeftSideOfAssignment(expression)) {
-                // setter
-
-                PsiMethod setter = accessorsMap.getFieldToSetter().get(field);
-
-                PsiAssignmentExpression assignment = (PsiAssignmentExpression) expression.getParent();
-                PsiExpression setterCallExpression =
-                        PsiElementFactoryImpl.SERVICE.getInstance(method.getProject())
-                            .createExpressionFromText(setter.getName() + "(" + assignment.getRExpression().getText()  + ")", expression);
-
-                assignment.replace(setterCallExpression);
-            } else {
-                // getter
-
-                PsiMethod getter = accessorsMap.getFieldToGetter().get(field);
-                PsiExpression getterCallExpression =
-                        PsiElementFactoryImpl.SERVICE.getInstance(method.getProject())
-                                .createExpressionFromText(getter.getName() + "()", expression);
-
-                expression.replace(getterCallExpression);
-            }
-        }
     }
 }
