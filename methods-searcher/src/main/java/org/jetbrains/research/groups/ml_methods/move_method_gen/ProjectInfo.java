@@ -77,6 +77,7 @@ public class ProjectInfo {
                 add(new FilterWithCounter<>(new PrivateFieldAccessorsFilter(ProjectInfo.this)));
                 add(new FilterWithCounter<>(new OverridingMethodsFilter()));
                 add(new FilterWithCounter<>(new OverriddenMethodsFilter()));
+                add(new FilterWithCounter<>(new MethodCallWithSuperFilter()));
                 add(new FilterWithCounter<>(new NoTargetsMethodsFilter(new RelevantClasses(classes))));
             }};
 
