@@ -31,6 +31,7 @@ public class ProjectInfo {
                 add(new EmptyClassesFilter());
                 add(new AnonymousClassesFilter());
                 add(new PrivateClassFilter());
+                add(new GenericsFilter());
             }};
 
     private final @NotNull List<PsiMethod> methods;
