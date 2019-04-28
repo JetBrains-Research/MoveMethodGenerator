@@ -30,6 +30,7 @@ public class ProjectInfo {
                 add(new BuildersFilter());
                 add(new EmptyClassesFilter());
                 add(new AnonymousClassesFilter());
+                add(new PrivateClassFilter());
             }};
 
     private final @NotNull List<PsiMethod> methods;
