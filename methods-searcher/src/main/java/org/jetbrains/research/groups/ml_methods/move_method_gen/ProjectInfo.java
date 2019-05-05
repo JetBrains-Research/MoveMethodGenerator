@@ -30,7 +30,7 @@ public class ProjectInfo {
                 add(new BuildersFilter());
                 add(new EmptyClassesFilter());
                 add(new AnonymousClassesFilter());
-                add(new PrivateClassFilter());
+                add(new InaccessibleClassFilter());
                 add(new GenericsFilter());
             }};
 
