@@ -36,6 +36,11 @@ public class PrivateFieldAccessorsFilter implements Filter<PsiMethod> {
 
                 PsiField field = optional.get();
 
+                if (!psiMethod.getContainingClass().equals(field.getContainingClass())) {
+                    resultRef.set(false);
+                    return;
+                }
+
                 if (MethodUtils.isInLeftSideOfAssignment(expression)) {
                     if (!projectInfo.getAccessorsMap().getFieldToSetter().containsKey(field)) {
                         resultRef.set(false);
