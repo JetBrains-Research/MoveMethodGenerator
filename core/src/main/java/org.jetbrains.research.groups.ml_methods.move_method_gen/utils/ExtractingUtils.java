@@ -67,17 +67,7 @@ public class ExtractingUtils {
     public static @NotNull List<PsiClass> extractClasses(
         final @NotNull PsiJavaFile javaFile
     ) {
-        List<PsiClass> classes = new ArrayList<>();
-
-        new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitClass(final @NotNull PsiClass aClass) {
-                super.visitClass(aClass);
-                classes.add(aClass);
-            }
-        }.visitElement(javaFile);
-
-        return classes;
+        return Arrays.stream(javaFile.getClasses()).collect(Collectors.toList());
     }
 
     public static @NotNull List<PsiClass> extractClasses(
