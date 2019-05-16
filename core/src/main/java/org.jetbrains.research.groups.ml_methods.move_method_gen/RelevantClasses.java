@@ -1,7 +1,9 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
+import com.intellij.openapi.util.Ref;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.research.groups.ml_methods.move_method_gen.utils.MethodUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +31,39 @@ public class RelevantClasses {
             if (
                 actualClass != null &&
                 classesSet.contains(actualClass) &&
-                !actualClass.equals(method.getContainingClass())
+                !actualClass.equals(method.getContainingClass()) &&
+                isCandidate(method, parameter)
             ) {
                 targets.add(actualClass);
             }
         }
 
         return targets;
+    }
+
+    private boolean isCandidate(final @NotNull PsiMethod method, final @NotNull PsiParameter parameter) {
+        Ref<Boolean> result = new Ref<>(true);
+
+        new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitReferenceExpression(
+                final @NotNull PsiReferenceExpression expression
+            ) {
+                super.visitReferenceExpression(expression);
+
+                if (!MethodUtils.isInLeftSideOfAssignment(expression)) {
+                    return;
+                }
+
+                JavaResolveResult resolveResult = expression.advancedResolve(false);
+                PsiElement referencedElement = resolveResult.getElement();
+
+                if (referencedElement == parameter) {
+                    result.set(false);
+                }
+            }
+        }.visitElement(method);
+
+        return result.get();
     }
 }
