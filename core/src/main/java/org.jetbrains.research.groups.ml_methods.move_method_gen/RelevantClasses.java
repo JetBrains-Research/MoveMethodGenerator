@@ -1,5 +1,7 @@
 package org.jetbrains.research.groups.ml_methods.move_method_gen;
 
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +21,8 @@ public class RelevantClasses {
     public @NotNull Set<PsiClass> possibleTargets(final @NotNull PsiMethod method) {
         Set<PsiClass> targets = new HashSet<>();
 
+        Module methodModule = ModuleUtil.findModuleForFile(method.getContainingFile());
+
         for (PsiParameter parameter : method.getParameterList().getParameters()) {
             PsiType type = parameter.getType();
             if (!(type instanceof PsiClassType)) {
@@ -32,6 +36,7 @@ public class RelevantClasses {
                 actualClass != null &&
                 classesSet.contains(actualClass) &&
                 !actualClass.equals(method.getContainingClass()) &&
+                methodModule.equals(ModuleUtil.findModuleForFile(actualClass.getContainingFile())) &&
                 isCandidate(method, parameter)
             ) {
                 targets.add(actualClass);
