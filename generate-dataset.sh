@@ -6,6 +6,9 @@ if [ $# -ne "2" ]; then
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )" # from https://stackoverflow.com/a/246128
+if uname -s | grep -iq cygwin ; then
+    DIR=$(cygpath -w "$DIR")
+    PWD=$(cygpath -w "$PWD")
+fi
 
-$DIR/gradlew --console=plain -p $DIR runGeneration -PprojectFolder="$PWD/$1" -PoutputDir="$PWD/$2"
-
+"$DIR/gradlew" --console=plain -p "$DIR" runGeneration -PprojectFolder="$PWD/$1" -PoutputDir="$PWD/$2"
