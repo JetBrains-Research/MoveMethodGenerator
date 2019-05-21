@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ $# -ne "2" ]; then
-    echo "usage: generate-dataset <path to project> <path to csv files folder>"
+    echo "usage: methods-mover <path to project> <path to csv files folder>"
     exit 1
 fi
 

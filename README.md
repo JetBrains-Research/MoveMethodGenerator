@@ -7,7 +7,7 @@ Usage:
 ```
 ./generate-dataset <path to project> <path to output folder>
 ```
-where \<path to project\> is a system path to project to analyze, \<path to output folder\> - path where found anti-refactorings will be stored. Note that these two paths must be **relative**.
+where \<path to project\> is a system path to project to analyze. Found anti-refactorings will be stored in \<path to output folder\>/\<project name\> folder. Note that these two paths must be **relative**.
 
 If you are getting an error: 
 ```
@@ -48,3 +48,9 @@ This table consists of six columns:
 6. list of class ids (space is delimiter), where this method can be moved
 
 The listed methods can be moved all at once or one by one to create code smells in project for further analysis. Projects which are going to be used for modification should have mature design and proper architecture (ie. should have almost zero code smells).
+
+Then this csv output can be passed to methods-mover with the following command:
+```
+./methods-mover <path to project> <path to csv files folder>
+```
+This command will try to move physically given methods and as an output it will generate moved-methods.csv which describes methods the tool actually has moved.
