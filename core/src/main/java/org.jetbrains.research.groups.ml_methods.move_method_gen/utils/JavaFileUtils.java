@@ -21,7 +21,8 @@ public class JavaFileUtils {
         final @NotNull String path,
         final boolean refresh
     ) {
-        VirtualFile virtualFile = project.getBaseDir().findFileByRelativePath(path);
+        String rpath = path.replace('\\', '/');
+        VirtualFile virtualFile = project.getBaseDir().findFileByRelativePath(rpath);
         if (virtualFile == null) {
             return Optional.empty();
         }
